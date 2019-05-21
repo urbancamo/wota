@@ -102,7 +102,7 @@ var sotaWotaIdMap map[string]string
 
 func main() {
 	if !debugDb {
-		db, err = sql.Open("mysql", "wotasite_wotadbu:Skiddaw931_wotasite_wotadbu@/wotasite_wotadb")
+		db, err = sql.Open("mysql", WotaDb)
 		defer db.Close()
 		if err != nil {
 			fmt.Println(err.Error())
