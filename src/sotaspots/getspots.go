@@ -96,8 +96,8 @@ var sotaToWotaJson = []byte(`[
 
 var db *sql.DB
 var err error
-var debugIn = true
-var debugDb = true
+var debugIn = false
+var debugDb = false
 var sotaWotaIdMap map[string]string
 
 func main() {
@@ -136,15 +136,18 @@ func getSpots() []SotaSpot {
 		var spot = createDummySpot()
 		spots = append(spots, spot)
 	} else {
-		response, err := http.Get("http://api2.sota.org.uk/api/spots/1/{filter}?filter=all")
+		response, err := http.Get("http://api2.sota.org.uk/api/spots/1")
 		if err != nil {
 			log.Fatal(err)
 		} else {
 			defer response.Body.Close()
-			body, err := ioutil.ReadAll(response.Body)
-			err2 := json.Unmarshal(body, &spots)
-			if err != nil {
+			body, err2 := ioutil.ReadAll(response.Body)
+			if err2 != nil {
 				fmt.Println("error:", err2)
+			}
+			err3 := json.Unmarshal(body, &spots)
+			if err2 != nil {
+				fmt.Println("error:", err3)
 			}
 		}
 	}
@@ -155,7 +158,7 @@ func updateSpotsInDb(wotaSpots []WotaSpot) {
 	for _, spot := range wotaSpots {
 		// check to see if we've added the spot already
 		id := 0
-		err = db.QueryRow("SELECT id FROM spots WHERE datetime = ? and call = ? and wotaid = ?",
+		err = db.QueryRow("SELECT `id` FROM `spots` WHERE `datetime` = ? and `call` = ? and `wotaid` = ?",
 			spot.DateTime, spot.Call, spot.WotaId).Scan(&id)
 		if id == 0 {
 			// add spot if not already there
@@ -164,6 +167,9 @@ func updateSpotsInDb(wotaSpots []WotaSpot) {
 			if err != nil {
 				fmt.Println("error:", err)
 			}
+			fmt.Printf("Spot %s %s %d added\n", spot.DateTime, spot.Call, spot.WotaId)
+		} else {
+			fmt.Printf("Spot %s %s %d already added, ignoring\n", spot.DateTime, spot.Call, spot.WotaId)
 		}
 	}
 
@@ -173,9 +179,10 @@ func convertSotaToWotaSpots(sotaSpots []SotaSpot) []WotaSpot {
 	var wotaSpots []WotaSpot
 
 	for _, spot := range sotaSpots {
-		wotaId := getWotaIdFromSotaId(spot.SummitCode)
-		if spot.AssociationCode == "GLD" && wotaId != "" {
-			wotaSpots = append(wotaSpots, convertSotaToWotaSpot(spot))
+		if spot.AssociationCode == "G" && strings.Split(spot.SummitCode, "-")[0] == "LD" {
+			if getWotaIdFromSotaId(spot.SummitCode) != "" {
+				wotaSpots = append(wotaSpots, convertSotaToWotaSpot(spot))
+			}
 		}
 	}
 	return wotaSpots
@@ -183,7 +190,9 @@ func convertSotaToWotaSpots(sotaSpots []SotaSpot) []WotaSpot {
 
 func convertSotaToWotaSpot(sotaSpot SotaSpot) WotaSpot {
 	var wotaSpot WotaSpot
-	wotaSpot.DateTime = sotaSpot.Timestamp
+
+	wotaSpot.DateTime = strings.Split(strings.ReplaceAll(sotaSpot.Timestamp, "T", " "), ".")[0]
+
 	wotaSpot.Call = sotaSpot.ActivatorCallsign
 	wotaSpot.WotaId, _ = strconv.Atoi(getWotaIdFromSotaId(sotaSpot.SummitCode))
 	//if wotaId <= 214 {
@@ -206,10 +215,10 @@ func getWotaIdFromSotaId(summitCode string) string {
 func createDummySpot() SotaSpot {
 	var spot SotaSpot
 	spot.Id = 12345
-	spot.Timestamp = "2019-05-21T19:06:00.000"
+	spot.Timestamp = "2019-05-21T19:06:59.999"
 	spot.Comments = "TEST PLEASE IGNORE"
 	spot.Callsign = "G1OHH"
-	spot.AssociationCode = "GLD"
+	spot.AssociationCode = "G"
 	spot.SummitCode = "LD-056"
 	spot.ActivatorName = "Mark"
 	spot.ActivatorCallsign = "M0NOM/P"
