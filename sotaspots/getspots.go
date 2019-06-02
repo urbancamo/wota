@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
 	"strings"
+	"wota/sotautils"
 )
 
 type SotaSpot struct {
@@ -37,68 +37,10 @@ type WotaSpot struct {
 	Spotter  string
 }
 
-type SotaWota struct {
-	Sotaid string
-	Wotaid string
-}
-
-var sotaToWotaJson = []byte(`[
-{"sotaid":"000001","wotaid":"000001"},
-{"sotaid":"000003","wotaid":"000003"},
-{"sotaid":"000004","wotaid":"000004"},
-{"sotaid":"000005","wotaid":"000007"},
-{"sotaid":"000006","wotaid":"000008"},
-{"sotaid":"000007","wotaid":"000013"},
-{"sotaid":"000008","wotaid":"000014"},
-{"sotaid":"000009","wotaid":"000020"},
-{"sotaid":"000010","wotaid":"000022"},
-{"sotaid":"000011","wotaid":"000025"},
-{"sotaid":"000012","wotaid":"000029"},
-{"sotaid":"000013","wotaid":"000030"},
-{"sotaid":"000014","wotaid":"000032"},
-{"sotaid":"000015","wotaid":"000040"},
-{"sotaid":"000017","wotaid":"000049"},
-{"sotaid":"000018","wotaid":"000055"},
-{"sotaid":"000019","wotaid":"000056"},
-{"sotaid":"000020","wotaid":"000063"},
-{"sotaid":"000021","wotaid":"000067"},
-{"sotaid":"000022","wotaid":"000069"},
-{"sotaid":"000023","wotaid":"000082"},
-{"sotaid":"000024","wotaid":"000086"},
-{"sotaid":"000025","wotaid":"000093"},
-{"sotaid":"000026","wotaid":"000104"},
-{"sotaid":"000027","wotaid":"000108"},
-{"sotaid":"000028","wotaid":"000112"},
-{"sotaid":"000029","wotaid":"000129"},
-{"sotaid":"000031","wotaid":"000140"},
-{"sotaid":"000033","wotaid":"000147"},
-{"sotaid":"000034","wotaid":"000151"},
-{"sotaid":"000035","wotaid":"000155"},
-{"sotaid":"000036","wotaid":"000168"},
-{"sotaid":"000037","wotaid":"000173"},
-{"sotaid":"000040","wotaid":"000184"},
-{"sotaid":"000041","wotaid":"000190"},
-{"sotaid":"000042","wotaid":"000196"},
-{"sotaid":"000043","wotaid":"000203"},
-{"sotaid":"000044","wotaid":"000210"},
-{"sotaid":"000047","wotaid":"000211"},
-{"sotaid":"000051","wotaid":"000213"},
-{"sotaid":"000030","wotaid":"000216"},
-{"sotaid":"000032","wotaid":"000219"},
-{"sotaid":"000045","wotaid":"000273"},
-{"sotaid":"000048","wotaid":"000278"},
-{"sotaid":"000050","wotaid":"000281"},
-{"sotaid":"000053","wotaid":"000297"},
-{"sotaid":"000054","wotaid":"000303"},
-{"sotaid":"000055","wotaid":"000317"},
-{"sotaid":"000056","wotaid":"000323"}
-]`)
-
 var db *sql.DB
 var err error
 var debugIn = false
 var debugDb = false
-var sotaWotaIdMap map[string]string
 
 func main() {
 	if !debugDb {
@@ -112,21 +54,12 @@ func main() {
 			fmt.Println(err.Error())
 		}
 	}
-	loadSotaWotaMapId()
+	sotautils.LoadSotaWotaMapId()
 	var sotaSpots = getSpots()
 	var wotaSpots = convertSotaToWotaSpots(sotaSpots)
 	fmt.Printf("\n\n\n%+v", wotaSpots)
 	if len(wotaSpots) > 0 && !debugDb {
 		updateSpotsInDb(wotaSpots)
-	}
-}
-
-func loadSotaWotaMapId() {
-	sotaWotaIdMap = make(map[string]string)
-	var sotaWotaData []SotaWota
-	json.Unmarshal(sotaToWotaJson, &sotaWotaData)
-	for _, sotaWotaId := range sotaWotaData {
-		sotaWotaIdMap[sotaWotaId.Sotaid] = sotaWotaId.Wotaid
 	}
 }
 
@@ -180,7 +113,7 @@ func convertSotaToWotaSpots(sotaSpots []SotaSpot) []WotaSpot {
 
 	for _, spot := range sotaSpots {
 		if spot.AssociationCode == "G" && strings.Split(spot.SummitCode, "-")[0] == "LD" {
-			if getWotaIdFromSotaId(spot.SummitCode) != "" {
+			if sotautils.GetWotaIdFromSotaCode(spot.SummitCode) != 0 {
 				wotaSpots = append(wotaSpots, convertSotaToWotaSpot(spot))
 			}
 		}
@@ -194,22 +127,25 @@ func convertSotaToWotaSpot(sotaSpot SotaSpot) WotaSpot {
 	wotaSpot.DateTime = strings.Split(strings.ReplaceAll(sotaSpot.Timestamp, "T", " "), ".")[0]
 
 	wotaSpot.Call = sotaSpot.ActivatorCallsign
-	wotaSpot.WotaId, _ = strconv.Atoi(getWotaIdFromSotaId(sotaSpot.SummitCode))
+	wotaSpot.WotaId = sotautils.GetWotaIdFromSotaCode(sotaSpot.SummitCode)
+
 	//if wotaId <= 214 {
 	//	wotaSpot.WotaId = fmt.Sprintf("LDW-%03d", wotaId)
 	//} else {
 	//	wotaSpot.WotaId = fmt.Sprintf("LDO-%03d", wotaId-214)
 	//}
 	wotaSpot.FreqMode = sotaSpot.Frequency + "-" + sotaSpot.Mode
-	wotaSpot.Comment = sotaSpot.Comments
+	var commentLen = len(sotaSpot.Comments)
+	if commentLen > 79 {
+		commentLen = 79
+	}
+	wotaSpot.Comment = sotaSpot.Comments[0:commentLen]
+	if len(wotaSpot.Comment) < 79-len("[SOTA>WOTA] ") {
+		// add a header if we have enough room
+		wotaSpot.Comment = "[SOTA>WOTA] " + sotaSpot.Comments
+	}
 	wotaSpot.Spotter = sotaSpot.Callsign
 	return wotaSpot
-}
-
-func getWotaIdFromSotaId(summitCode string) string {
-	sotaSummitNumber, _ := strconv.Atoi(strings.SplitAfter(summitCode, "-")[1])
-	summitRef := fmt.Sprintf("%06d", sotaSummitNumber)
-	return sotaWotaIdMap[summitRef]
 }
 
 func createDummySpot() SotaSpot {

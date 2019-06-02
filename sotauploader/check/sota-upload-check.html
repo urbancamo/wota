@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOTA CSV Upload Check</title>
+</head>
+<body>
+    <form action="/cgi-bin/sota-uploader/submit-form" method="post">
+        <p>Username: <b>$USER</b></p>
+        <p>SOTA CSV File: "<b>$FILENAME</b>"</p>
+        <textarea cols="100" rows="20" name="content">$CONTENT</textarea>
+        <p>Errors: <b>$ERRORS</b></p>
+        <p>Activator Contacts: <b>$ACTIVATION_COUNT</b></p>
+        <table>
+            <thead>
+                <th>Date</th>
+                <th>Callsign Used</th>
+                <th>Summit Id</th>
+                <th>Summit Name</th>
+                <th>Contact</th>
+                <th>S2S</th>
+            </thead>
+            <tbody>
+                $ACTIVATION_CONTACTS
+            </tbody>
+        </table>
+        <p>Chaser Contacts: <b>$CHASER_COUNT</b></p>
+        <table>
+            <thead>
+                <th>Date</th>
+                <th>Callsign Used</th>
+                <th>Summit</th>
+                <th>Summit Name</th>
+                <th>Station Worked</th>
+            </thead>
+            <tbody>
+                $CHASER_CONTACTS
+            </tbody>
+        </table>
+        <p><input type="submit" name="Submit" value="Upload Contacts" /></p>
+    </form>
+</body>
+</html>

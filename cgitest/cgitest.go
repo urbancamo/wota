@@ -1,6 +1,6 @@
 // go build -ldflags "-s -w" -o index.cgi cgi.go
 
-package cgitest
+package main
 
 import (
 	"fmt"

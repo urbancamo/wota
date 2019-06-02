@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9e570908-176b-418c-bfed-fea109f8d2a7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cgitest/readtest..go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotaspots/dbconfig.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/check/check_form.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/check/sota-upload-check.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/create/create_form.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/create/sota-upload-form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/db/dbaccess.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/db/summits.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/process-form/process-form.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/test/csv/2019-05-18-04-Seat-Sandal-SOTA.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/utils/cookieUtils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/utils/debugUtils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotautils/callsignUtils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotautils/sotawota.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cgitest/cgitest.go" beforeDir="false" afterPath="$PROJECT_DIR$/cgitest/cgitest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sotaspots/getspots.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaspots/getspots.go" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/create/create_form.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+              <folding>
+                <element signature="e#64#220#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sotauploader/check/check_form.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="130" column="1" selection-start-line="130" selection-start-column="1" selection-end-line="130" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/create/sota-upload-form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotautils/sotawota.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/db/dbconfig.go">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/check/sota-upload-check.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="422">
+              <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="173">
+              <caret line="158" column="53" selection-start-line="158" selection-start-column="53" selection-end-line="158" selection-end-column="53" />
+              <folding>
+                <element signature="e#13#90#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/db/summits.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9">
+              <caret line="67" column="18" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+              <folding>
+                <element signature="e#12#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/go/src/runtime/panic.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="689" selection-start-line="689" selection-end-line="689" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="403">
+              <caret line="72" column="29" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+              <folding>
+                <element signature="e#14#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ParseMulti</find>
+      <find>no such file</find>
+      <find>getFile</find>
+      <find>getChaseTable</find>
+    </findStrings>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="urbancamo &lt;mark@wickensonline.co.uk&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="urls">
+      <list>
+        <option value="file://$PROJECT_DIR$/../.." />
+      </list>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/cgitest/form.html" />
+        <option value="$PROJECT_DIR$/src/sotaspots/dbconfig.go" />
+        <option value="$PROJECT_DIR$/src/sotautils/sotawota.go" />
+        <option value="$PROJECT_DIR$/src/sotaspots/getspots.go" />
+        <option value="$PROJECT_DIR$/src/cgitest/readtest,gi.go" />
+        <option value="$PROJECT_DIR$/src/cgitest/cgitest.go" />
+        <option value="$PROJECT_DIR$/src/cgitest/readtest..go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/sota-upload-form.html" />
+        <option value="$PROJECT_DIR$/src/sotauploader/serve-form.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/utils/sotawota.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/create-sota-upload-form.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/check-sota-upload-form.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/check-sota-upload-form/check-sota-upload-form.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/db/dbaccess.go" />
+        <option value="$PROJECT_DIR$/src/sotauploader/create-sota-upload-form/create-sota-upload-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/create-sota-upload-form/create-sota-upload-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/utils/cookieUtils.go" />
+        <option value="$PROJECT_DIR$/sotauploader/process-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/process-form/process-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/db/dbaccess.go" />
+        <option value="$PROJECT_DIR$/sotauploader/utils/debugUtils.go" />
+        <option value="$PROJECT_DIR$/sotauploader/create-form/create-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/check/check-form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/create-form/sota-upload-form.html" />
+        <option value="$PROJECT_DIR$/sotauploader/utils/sotawota.go" />
+        <option value="$PROJECT_DIR$/sotaspots/getspots.go" />
+        <option value="$PROJECT_DIR$/sotautils/callsignUtils.go" />
+        <option value="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" />
+        <option value="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" />
+        <option value="$PROJECT_DIR$/sotauploader/create/sota-upload-form.html" />
+        <option value="$PROJECT_DIR$/sotauploader/create/create_form.go" />
+        <option value="$PROJECT_DIR$/sotauploader/db/summits.go" />
+        <option value="$PROJECT_DIR$/sotautils/sotawota.go" />
+        <option value="$PROJECT_DIR$/sotauploader/check/sota-upload-check.html" />
+        <option value="$PROJECT_DIR$/sotauploader/check/check_form.go" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="12" />
+    <option name="width" value="1494" />
+    <option name="height" value="987" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotaspots" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotauploader" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotauploader" type="462c0819:PsiDirectoryNode" />
+              <item name="check" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotauploader" type="462c0819:PsiDirectoryNode" />
+              <item name="create" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotauploader" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotauploader" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wota" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wota" type="462c0819:PsiDirectoryNode" />
+              <item name="sotautils" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="GO_FMT" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sotauploader/test" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sotauploader/test/csv" />
+      <recent name="$PROJECT_DIR$/sotauploader/test" />
+      <recent name="$PROJECT_DIR$/sotautils" />
+      <recent name="$PROJECT_DIR$/sotauploader/process-form" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="GoMoveDeclarationDialog.RECENT_KEY">
+      <recent name="$PROJECT_DIR$/sotauploader/utils" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sotauploader/check" />
+      <recent name="$PROJECT_DIR$/src/sotauploader" />
+      <recent name="$PROJECT_DIR$/src/cgitest" />
+      <recent name="$PROJECT_DIR$/src/sotaspots" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Go Build.check_form">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="wota" />
+      <working_directory value="$PROJECT_DIR$/bin" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/" />
+      <package value="wota" />
+      <directory value="$PROJECT_DIR$/" />
+      <output_directory value="$PROJECT_DIR$/bin" />
+      <method v="2" />
+    </configuration>
+    <configuration name="check_form" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <module name="wota" />
+      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/sotauploader/check/check_form.go" />
+      <package value="wota" />
+      <directory value="$PROJECT_DIR$/" />
+      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <method v="2" />
+    </configuration>
+    <configuration name="create-form" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <module name="wota" />
+      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <kind value="DIRECTORY" />
+      <filePath value="$PROJECT_DIR$/src/sotauploader/serve-form.go|$PROJECT_DIR$/src/sotauploader/sotawota.go $PROJECT_DIR$/src/sotauploader/serve-form.go|$PROJECT_DIR$/src/sotauploader/sotawota.go $PROJECT_DIR$/src/sotauploader/sotawota.go|$PROJECT_DIR$/src/sotauploader/dbconfig.go" />
+      <package value="wota.src.sotauploader" />
+      <directory value="$PROJECT_DIR$/sotauploader/create" />
+      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <method v="2" />
+    </configuration>
+    <configuration name="getspots" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="wota" />
+      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <filePath value="$PROJECT_DIR$/|$PROJECT_DIR$/sotaspots/getspots.go" />
+      <package value="wota" />
+      <directory value="$PROJECT_DIR$/sotaspots" />
+      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build testSotaCsvToContacts.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="wota" />
+      <working_directory value="$PROJECT_DIR$/sotauploader/test" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" />
+      <package value="wota" />
+      <directory value="$PROJECT_DIR$/" />
+      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.getspots" />
+      <item itemvalue="Go Build.create-form" />
+      <item itemvalue="Go Build.check_form" />
+      <item itemvalue="Go Build.go build testSotaCsvToContacts.go" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.check_form" />
+        <item itemvalue="Go Build.create-form" />
+        <item itemvalue="Go Build.go build testSotaCsvToContacts.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="12" y="0" width="1494" height="987" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25277779" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32865497" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.19649123" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990025" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32988626" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32917705" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20437956" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32988626" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2950956" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990025" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32988626" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32917705" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Now working as a cron job on the website" />
+    <option name="LAST_COMMIT_MESSAGE" value="Now working as a cron job on the website" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/sotaspots/getspots.go</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/sotauploader/create/create_form.go</url>
+          <line>36</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go</url>
+          <line>30</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>strings.SplitAfter(spot.SummitCode, &quot;-&quot;)[0]</expression-string>
+        <language-id>go</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/cgitest/form.html" />
+    <entry file="file:///usr/local/go/src/runtime/asm_amd64.s">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="518" selection-start-line="518" selection-end-line="518" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/syscall/env_unix.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/os/env.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="431">
+          <caret line="139" selection-start-line="139" selection-end-line="139" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/net/http/cgi/child.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="146" selection-start-line="146" selection-end-line="146" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/net/http/cookie.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="262" selection-start-line="262" selection-end-line="262" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cgitest/cgitest.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/sota-upload-form.html" />
+    <entry file="file://$PROJECT_DIR$/cgitest/readtest..go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#14#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/net/http/request.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="1253" column="21" selection-start-line="1253" selection-start-column="21" selection-end-line="1253" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/process-form/process-form.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/net/http/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="137" column="4" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/mime/multipart/multipart.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-602">
+          <caret line="319" column="30" selection-start-line="319" selection-start-column="30" selection-end-line="319" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/utils/debugUtils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/utils/cookieUtils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+          <folding>
+            <element signature="e#15#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/encoding/csv/reader.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2835">
+          <caret line="197" column="17" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/mime/multipart/formdata.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotaspots/dbconfig.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotautils/sotawota.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotaspots/getspots.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#14#170#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotaspots/sotawota.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///usr/local/go/src/fmt/print.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="391" column="30" selection-start-line="391" selection-start-column="30" selection-end-line="391" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotautils/callsignUtils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/test/csv/2019-05-18-04-Seat-Sandal-SOTA.csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/strings/strings.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="553" selection-start-line="553" selection-end-line="553" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/test/csv/2018-05-19-Fairfield-SOTA.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/test/csv/2018-05-03-Lickbarrow-Road.csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="50" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/db/dbaccess.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="10" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/builtin/builtin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="683">
+          <caret line="260" column="5" selection-start-line="260" selection-start-column="5" selection-end-line="260" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/database/sql/sql.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="2933" column="16" selection-start-line="2933" selection-start-column="16" selection-end-line="2933" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/runtime/proc.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="153" selection-start-line="153" selection-end-line="153" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/runtime/panic.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="689" selection-start-line="689" selection-end-line="689" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/create/create_form.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="67" column="31" lean-forward="true" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+          <folding>
+            <element signature="e#64#220#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/db/summits.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="67" column="18" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+          <folding>
+            <element signature="e#12#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="72" column="29" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+          <folding>
+            <element signature="e#14#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/db/dbconfig.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="158" column="53" selection-start-line="158" selection-start-column="53" selection-end-line="158" selection-end-column="53" />
+          <folding>
+            <element signature="e#13#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotautils/sotawota.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/create/sota-upload-form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/check/sota-upload-check.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sotauploader/check/check_form.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="130" column="1" selection-start-line="130" selection-start-column="1" selection-end-line="130" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
