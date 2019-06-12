@@ -78,7 +78,7 @@ func LoadSotaWotaMapId() {
 	}
 }
 
-func GetWotaIdFromSotaCode(summitCode string) int {
+func GetWotaIdFromSummitCode(summitCode string) int {
 	if summitCode == "" {
 		return 0
 	}
@@ -86,8 +86,9 @@ func GetWotaIdFromSotaCode(summitCode string) int {
 	if len(summitParts) != 2 {
 		return 0
 	}
-	if summitParts[0] != "G/LD" {
-		return 0
+	if summitParts[0] != "LD" {
+		// try for a WOTA ID instead
+		return GetWotaIdFromRef(summitCode)
 	}
 
 	sotaSummitNumber, _ := strconv.Atoi(strings.SplitAfter(summitCode, "-")[1])
@@ -106,6 +107,27 @@ func GetWotaRefFromId(wotaId int) string {
 	}
 }
 
+func GetWotaIdFromRef(wotaRef string) int {
+	id := 0
+	if len(wotaRef) == 7 {
+		candidateId, err := strconv.Atoi(wotaRef[4:7])
+		if err != nil {
+			return 0
+		}
+
+		if strings.Contains(wotaRef, "LDW-") {
+			id = candidateId
+		} else if strings.Contains(wotaRef, "LDO-") {
+			id = candidateId + 214
+		}
+	}
+
+	if id < 0 || id > 331 {
+		id = 0
+	}
+	return id
+}
+
 func ConvertSotaDate(sotaDate string, sotaTime string) string {
 	dateFields := strings.Split(sotaDate, "/")
 	// Just check that we have three fields, if not try a - as the separator
@@ -120,12 +142,12 @@ func ConvertSotaDate(sotaDate string, sotaTime string) string {
 	}
 
 	var hour, min string
-	if len(sotaTime) == 3 {
-		hour = sotaTime[0:1]
-		min = sotaTime[1:3]
-	} else {
+	if len(sotaTime) == 4 {
 		hour = sotaTime[0:2]
 		min = sotaTime[2:4]
+	} else {
+		hour = sotaTime[0:2]
+		min = sotaTime[3:5]
 	}
 	return fmt.Sprintf("%04s-%02s-%02s %02s:%02s:00", year, month, day, hour, min)
 }

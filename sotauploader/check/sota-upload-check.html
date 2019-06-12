@@ -3,30 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>SOTA CSV Upload Check</title>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.tabletojson.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.tabledit.min.js"></script>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <form action="/cgi-bin/sota-uploader/submit-form" method="post">
+    <div class="container">
         <p>Username: <b>$USER</b></p>
-        <p>SOTA CSV File: "<b>$FILENAME</b>"</p>
+        <p>Content of the Uploaded File:</p>
         <textarea cols="100" rows="20" name="content">$CONTENT</textarea>
         <p>Errors: <b>$ERRORS</b></p>
+        <p>&nbsp;</p>
         <p>Activator Contacts: <b>$ACTIVATION_COUNT</b></p>
-        <table>
+        <table class="table table-striped table-bordered" id="activationsTable">
             <thead>
+                <th>Index</th>
                 <th>Date</th>
                 <th>Callsign Used</th>
                 <th>Summit Id</th>
                 <th>Summit Name</th>
                 <th>Contact</th>
-                <th>S2S</th>
+                <th>Summit to Summit</th>
             </thead>
             <tbody>
                 $ACTIVATION_CONTACTS
             </tbody>
         </table>
+        <p>&nbsp;</p>
         <p>Chaser Contacts: <b>$CHASER_COUNT</b></p>
-        <table>
+        <table class="table table-striped table-bordered" id="chasesTable">
             <thead>
+                <th>Index</th>
                 <th>Date</th>
                 <th>Callsign Used</th>
                 <th>Summit</th>
@@ -37,7 +47,104 @@
                 $CHASER_CONTACTS
             </tbody>
         </table>
-        <p><input type="submit" name="Submit" value="Upload Contacts" /></p>
-    </form>
+        <p>&nbsp;Upload Results:</p>
+        <textarea cols="100" rows="20" id="results"></textarea>
+
+        <p><input id="btnSubmit" type="button" name="Submit" value="Upload Contacts" /></p>
+        <form id="hiddenStuff">
+            <input id="activationsCount" type="hidden" value="$ACTIVATION_COUNT"></input>
+            <input id="chasesCount" type="hidden" value="$CHASER_COUNT"></input>
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        $('#activationsTable').Tabledit({
+            columns: {
+                identifier: [0, 'Index'],
+                editable: [[3, 'Summit Id'], [5, 'Contact'], [6, 'Summit to Summit', '{"N": "N", "Y": "Y"}']]
+            }
+        });
+        $('#chasesTable').Tabledit({
+            columns: {
+                identifier: [0, 'Index'],
+                editable: [[3, 'Summit Id'], [5, 'Station Worked']]
+            }
+        });
+
+        $(document).ready(function() {
+            function processSubmitSuccess(data) {
+                var results = JSON.parse(data);
+                var errorContent = document.getElementById("results").innerHTML;
+                if (errorContent !== "") {
+                    errorContent = errorContent + "\n";
+                }
+                errorContent = errorContent + results;
+                document.getElementById("results").innerHTML = errorContent;
+            }
+
+            function processSubmitFailure(errMsg, tableName) {
+                var errorContent = document.getElementById("results").innerHTML;
+                if (errorContent !== "") {
+                    errorContent = errorContent + "\n";
+                }
+                errorContent = errorContent + tableName + ": " + errMsg;
+                document.getElementById("results").innerHTML = errorContent;
+                console.log(errMsg)
+                console.log(tableName)
+            }
+
+            function submitChasesTable() {
+                // Remove deleted rows
+                $("table#chasesTable tr.tabledit-deleted-row.danger").remove();
+                var chasesJson = $('table#chasesTable').tableToJSON();
+                $.ajax("/cgi-bin/sota-uploader/process_form?type=chaseContacts", {
+                    data: JSON.stringify(chasesJson),
+                    contentType: 'application/json',
+                    type: 'POST',
+                    async: false,
+                    success: function (data) {
+                        console.log(data)
+                        processSubmitSuccess(data);
+                    },
+                    failure: function (errMsg) {
+                        processSubmitFailure(errMsg);
+                    }
+                });
+            }
+
+            function submitActivationTable() {
+                // Remove deleted rows
+                $("table#activationsTable tr.tabledit-deleted-row.danger").remove();
+                // Remove all the S2S selects
+                $("select.tabledit-input.form-control.input-sm").remove();
+                var activationJson = $('table#activationsTable').tableToJSON();
+                $.ajax("/cgi-bin/sota-uploader/process_form?type=activationContacts", {
+                    data: JSON.stringify(activationJson),
+                    contentType: 'application/json',
+                    type: 'POST',
+                    async: false,
+                    success: function (data) {
+                        console.log(data)
+                        if ($("#chasesCount").val() != "0") {
+                            submitChasesTable();
+                        }
+                    },
+                    failure: function (errMsg) {
+                        processSubmitFailure(errMsg, "activationsTable");
+                    }
+                });
+            }
+
+            $("#btnSubmit").click(function () {
+                if ($("#activationsCount").val() != "0") {
+                    submitActivationTable();
+                }
+                if ($("#chasesCount").val() != "0") {
+                    submitChasesTable();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

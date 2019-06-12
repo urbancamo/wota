@@ -113,7 +113,7 @@ func convertSotaToWotaSpots(sotaSpots []SotaSpot) []WotaSpot {
 
 	for _, spot := range sotaSpots {
 		if spot.AssociationCode == "G" && strings.Split(spot.SummitCode, "-")[0] == "LD" {
-			if sotautils.GetWotaIdFromSotaCode(spot.SummitCode) != 0 {
+			if sotautils.GetWotaIdFromSummitCode(spot.SummitCode) != 0 {
 				wotaSpots = append(wotaSpots, convertSotaToWotaSpot(spot))
 			}
 		}
@@ -127,7 +127,7 @@ func convertSotaToWotaSpot(sotaSpot SotaSpot) WotaSpot {
 	wotaSpot.DateTime = strings.Split(strings.ReplaceAll(sotaSpot.Timestamp, "T", " "), ".")[0]
 
 	wotaSpot.Call = sotaSpot.ActivatorCallsign
-	wotaSpot.WotaId = sotautils.GetWotaIdFromSotaCode(sotaSpot.SummitCode)
+	wotaSpot.WotaId = sotautils.GetWotaIdFromSummitCode(sotaSpot.SummitCode)
 
 	//if wotaId <= 214 {
 	//	wotaSpot.WotaId = fmt.Sprintf("LDW-%03d", wotaId)
