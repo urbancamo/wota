@@ -4,17 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/cgi"
+	"os"
 	"strings"
+	"time"
 	"wota/sotauploader/db"
 	"wota/sotauploader/utils"
 	"wota/sotautils"
 )
 
-const ActivationContacts = "activationContacts"
-const ChaseContacts = "chaseContacts"
+const ActivationContacts = "Activation Contacts"
+const ChaseContacts = "Chase Contacts"
 
 // {"Index":"1","Date":"2019-05-18 09:12:00","Callsign Used":"M0NOM/P","Summit Id":"LDW-003","Summit Name":"Helvellyn","Contact":"M0OAT/P","Summit to Summit":"NNY"}
 type ActivationContact struct {
@@ -37,9 +40,15 @@ type ChaseContact struct {
 	StationWorked string `json:"Station Worked"`
 }
 
+type UploadResult struct {
+	Type    string `json:"Type"`
+	Results string `json:"Results"`
+	Errors  string `json:"Errors"`
+}
+
 var err error
 var errs strings.Builder
-var debugIn = true
+var debugIn = false
 var debugDb = false
 
 func main() {
@@ -54,16 +63,17 @@ func handleCgi() {
 	if err = cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var user = "UNKNOWN"
 		var summitCount int
+		var results strings.Builder
 
-		query := r.URL.Query()
-		uploadType := query.Get("type")
+		var uploadType = "UNDETERMINED"
+
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			errs.WriteString(err.Error())
 		}
 
 		header := w.Header()
-		header.Set("Content-Type", "text/html; charset=utf-8")
+		header.Set("Content-Type", "application/json; charset=utf-8")
 
 		authCookie := utils.FindAuthCookie(r.Cookies())
 
@@ -73,12 +83,14 @@ func handleCgi() {
 			if err != nil {
 				errs.WriteString(err.Error())
 			}
+			results.WriteString("CMS DB Opened... ")
 			err = db.Open(db.WotaDb)
 			if err != nil {
 				errs.WriteString(err.Error())
 			}
-
+			results.WriteString("WOTA DB Opened... ")
 			//summitCount, err = db.LoadSummits()
+
 			if err != nil {
 				errs.WriteString(fmt.Sprintf("%s occurred, summit count is %d", err.Error(), summitCount))
 			} else {
@@ -86,15 +98,52 @@ func handleCgi() {
 				if err != nil {
 					errs.WriteString(err.Error())
 				} else {
-					process(user, uploadType, body)
+					results.WriteString(fmt.Sprintf("User identified: %s\n", user))
+					// Determine if this is activation or chase data
+					jsonContent := string(body)
+					if strings.Contains(jsonContent, "\"Summit to Summit\":") {
+						uploadType = ActivationContacts
+						results.WriteString(process(user, uploadType, body))
+					} else {
+						uploadType = ChaseContacts
+						results.WriteString(process(user, uploadType, body))
+					}
+					results.WriteString("Processing Complete\n")
 				}
 			}
+		}
+
+		// Marshal results and errors into a json object for return
+		var jsonData []byte
+		var jsonUploadData UploadResult
+		jsonUploadData.Type = uploadType
+		if err != nil {
+			jsonUploadData.Errors = err.Error()
+		} else {
+			jsonUploadData.Errors = "No errors"
+		}
+		jsonUploadData.Results = results.String()
+
+		jsonData, err = json.Marshal(jsonUploadData)
+		if err != nil {
+			errs.WriteString(err.Error())
+		}
+
+		// Store a copy of the json result
+		logFilename := GetFilename("/home/wotasite/logs/sota-uploader", user)
+		err = WriteToFile(logFilename, jsonData)
+		if err != nil {
+			errs.WriteString(err.Error())
+		}
+
+		w.Write(jsonData)
+		if !debugDb {
+			db.CloseAll()
 		}
 
 	})); err != nil {
 		fmt.Println(err)
 	}
-
 }
 
 func handleFile() string {
@@ -198,6 +247,8 @@ func insertActivationContact(user string, contact ActivationContact) string {
 			return fmt.Sprintf("Could not insert: %s", getActivationDebugLine(contact))
 		} else if err != nil {
 			return err.Error()
+		} else {
+			return fmt.Sprintf("Inserted Activation Contact - Callsign: %s, Date: %s, Contact: %s, Summit: %s, Summit to Summit: %s\n", contact.CallsignUsed, contact.Date, contact.Contact, contact.SummitId, contact.SummitToSummit)
 		}
 	}
 	return ""
@@ -216,6 +267,8 @@ func insertChaseContact(user string, contact ChaseContact) string {
 			return fmt.Sprintf("Could not insert: %s", getChaseDebugLine(contact))
 		} else if err != nil {
 			return err.Error()
+		} else {
+			return fmt.Sprintf("Inserted Chase Contact - Callsign: %s, Date: %s, Summit: %s, Station Worked: %s\n", contact.CallsignUsed, contact.Date, contact.Summit, contact.StationWorked)
 		}
 	}
 	return ""
@@ -223,4 +276,25 @@ func insertChaseContact(user string, contact ChaseContact) string {
 
 func getChaseDebugLine(contact ChaseContact) string {
 	return fmt.Sprintf("Chase callsignUsed: callsignUsed: %s, date: %s, summit: %s, stationWorked: %s\n", contact.CallsignUsed, contact.Date, contact.Summit, contact.StationWorked)
+}
+
+func GetFilename(basepath string, callsign string) string {
+	t := time.Now()
+	return fmt.Sprintf("%s/%d-%02d-%02dT%02d%02d%02d-%s.json", basepath,
+		t.Year(), t.Month(), t.Day(),
+		t.Hour(), t.Minute(), t.Second(), callsign)
+}
+
+func WriteToFile(filename string, data []byte) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.WriteString(file, string(data))
+	if err != nil {
+		return err
+	}
+	return file.Sync()
 }

@@ -1,0 +1,9 @@
+#!/bin/bash
+GODIR=$HOME/go
+WOTADIR=$GODIR/src/wota
+cd $WOTADIR
+packr build -v wota/sotauploader/check
+cd $GODIR
+packr install -v wota/sotauploader/check
+cd $GODIR/bin
+mv check check_form
