@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/gobuffalo/packr"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -26,6 +25,7 @@ var errs strings.Builder
 var debugIn = false
 var debugDb = false
 var dumpForm = false
+var UTF8Bom = []byte{0xEF, 0xBB, 0xBF}
 
 const UNKNOWN = "UNKNOWN"
 
@@ -91,7 +91,7 @@ func main() {
 			}
 
 			// Store a copy of the CSV file uploaded
-			logFilename := GetFilename(os.Getenv("HOME")+"/logs/sota-uploader", user)
+			logFilename := GetFilename("/home/wotasite/logs/sota-uploader", user)
 			err = WriteToFile(logFilename, csvData)
 			if err != nil {
 				errs.WriteString(err.Error())
@@ -115,26 +115,25 @@ func main() {
 				}
 			}
 
-			if err == nil {
-				box := packr.NewBox("../templates")
-				formData := getFormData(user, filename, csvData, contacts, summitCount, errs.String())
-				var htmlTemplate string
-				htmlTemplate, err = box.FindString("sota-upload-check.html")
-				if err != nil {
-					errs.WriteString(err.Error())
-				} else {
-					tmpl, err := template.New("check").Parse(htmlTemplate)
+			templateLoaded := false
 
+			if err == nil {
+				formData := getFormData(user, filename, csvData, contacts, summitCount, errs.String())
+				tmpl, err := template.ParseFiles("../templates/sota-upload-check.html")
+
+				if err == nil {
+					err = tmpl.Execute(w, formData)
 					if err != nil {
 						errs.WriteString(err.Error())
 					} else {
-						err = tmpl.Execute(w, formData)
-						if err != nil {
-							errs.WriteString(err.Error())
-						}
+						templateLoaded = true
 					}
+				} else {
+					errs.WriteString(err.Error())
 				}
-			} else {
+			}
+
+			if !templateLoaded {
 				s := "<html><body>$ERRORS</body></html>"
 				s = strings.ReplaceAll(s, "$ERRORS", errs.String())
 				_, _ = w.Write([]byte(s))
@@ -187,7 +186,7 @@ func getActivationView(id int, contact csv.ActivationContact) ActivationsView {
 	var view ActivationsView
 	view.Id = id + 1
 	view.Date = string(contact.Date)
-	view.CallUsed = contact.CallUsed + "/P"
+	view.CallUsed = contact.CallUsed
 	view.WotaId = sotautils.GetWotaRefFromId(contact.WotaId)
 	view.SummitName = db.GetSummitName(contact.WotaId)
 	view.StnCall = contact.StnCall
@@ -199,12 +198,7 @@ func getChaseView(id int, contact csv.ChaserContact) ChaseView {
 	var view ChaseView
 	view.Id = id + 1
 	view.Date = string(contact.Date)
-
-	if true {
-		view.WorkedBy = contact.WkdBy + "/P"
-	} else {
-		view.WorkedBy = contact.WkdBy
-	}
+	view.WorkedBy = contact.WkdBy
 	view.WotaId = sotautils.GetWotaRefFromId(contact.WotaId)
 	view.SummitName = db.GetSummitName(contact.WotaId)
 	view.StnCall = contact.StnCall
@@ -222,12 +216,12 @@ func getFile(r *http.Request) (string, string) {
 			content = string(fileContentInBytes)
 		}
 	} else {
-		read_form, err := r.MultipartReader()
+		readForm, err := r.MultipartReader()
 		if err != nil {
 			errs.WriteString(err.Error())
 		} else {
 			for {
-				part, errPart := read_form.NextPart()
+				part, errPart := readForm.NextPart()
 				if errPart == io.EOF {
 					break
 				}
@@ -236,8 +230,12 @@ func getFile(r *http.Request) (string, string) {
 					filename = part.FileName()
 
 					buf := new(bytes.Buffer)
-					buf.ReadFrom(part)
-					content = buf.String()
+					_, _ = buf.ReadFrom(part)
+					// G8CPZ attempted an upload on 14/07/2019 which failed due to CSV file having a UTF BOM
+					// marker at the start. Strip the marker off if found
+					byteData := buf.Bytes()
+					strippedByteData := bytes.TrimPrefix(byteData, UTF8Bom)
+					content = string(strippedByteData)
 				}
 
 			}
