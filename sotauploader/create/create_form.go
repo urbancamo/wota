@@ -67,7 +67,7 @@ func main() {
 			}
 
 			formData := getFormData(user, errs.String(), getWotaOptions())
-			tmpl, err := template.ParseFiles("templates/sota-upload-form.html")
+			tmpl, err := template.ParseFiles("../templates/sota-upload-form.html")
 
 			if err != nil {
 				errs.WriteString(err.Error())

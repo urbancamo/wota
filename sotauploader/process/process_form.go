@@ -11,6 +11,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"wota/domain"
 	"wota/sotauploader/db"
 	"wota/sotauploader/utils"
 	"wota/sotautils"
@@ -28,16 +29,6 @@ type ActivationContact struct {
 	SummitName     string `json:"Summit Name"`
 	Contact        string `json:"Contact"`
 	SummitToSummit string `json:"Summit to Summit"`
-}
-
-// {"Index":"1","Date":"2019-05-18 09:12:00","Callsign Used":"M0NOM/P","Summit":"LDW-129","Summit Name":"Illgill Head","Station Worked":"M0OAT"}
-type ChaseContact struct {
-	Index         string `json:"Index"`
-	Date          string `json:"Date"`
-	CallsignUsed  string `json:"Callsign Used"`
-	Summit        string `json:"Summit"`
-	SummitName    string `json:"Summit Name"`
-	StationWorked string `json:"Station Worked"`
 }
 
 type UploadResult struct {
@@ -202,7 +193,7 @@ func process(user string, uploadType string, body []byte) string {
 		}
 		return processActivationContacts(user, activationContacts)
 	} else if uploadType == ChaseContacts {
-		var chaseContacts []ChaseContact
+		var chaseContacts []domain.ChaseContact
 		err := json.Unmarshal(body, &chaseContacts)
 		if err != nil {
 			return err.Error()
@@ -217,23 +208,15 @@ func process(user string, uploadType string, body []byte) string {
 func processActivationContacts(user string, activationContacts []ActivationContact) string {
 	var errs strings.Builder
 	for _, contact := range activationContacts {
-		callsignUsed := strings.ToUpper(contact.CallsignUsed)
-		// Sanity check - make sure the contact is relevant to the user attempting to upload the file
-		if strings.Contains(callsignUsed, user) {
-			errs.WriteString(insertActivationContact(user, contact))
-		}
+		errs.WriteString(insertActivationContact(user, contact))
 	}
 	return errs.String()
 }
 
-func processChaseContacts(user string, chaseContacts []ChaseContact) string {
+func processChaseContacts(user string, chaseContacts []domain.ChaseContact) string {
 	var errs strings.Builder
 	for _, contact := range chaseContacts {
-		callsignUsed := strings.ToUpper(contact.CallsignUsed)
-		// Sanity check - make sure the contact is relevant to the user attempting to upload the file
-		if strings.Contains(callsignUsed, user) {
-			errs.WriteString(insertChaseContact(user, contact))
-		}
+		errs.WriteString(insertChaseContact(user, contact))
 	}
 	return errs.String()
 }
@@ -242,7 +225,7 @@ func insertActivationContact(user string, contact ActivationContact) string {
 	if debugDb {
 		_, _ = fmt.Printf("INSERT ACTIVATION - callsignUsed: %s, date: %s, contact: %s, summitId: %s, s2s: %s\n", contact.CallsignUsed, contact.Date, contact.Contact, contact.SummitId, contact.SummitToSummit)
 	} else {
-		count, err := db.InsertActivation(user, user, contact.Date, contact.Contact, sotautils.GetWotaIdFromRef(contact.SummitId), contact.SummitToSummit)
+		count, err := db.InsertActivation(user, sotautils.GetOperatorFromCallsign(contact.CallsignUsed), contact.Date, contact.Contact, sotautils.GetWotaIdFromRef(contact.SummitId), contact.SummitToSummit)
 		if count != 1 {
 			return fmt.Sprintf("Could not insert: %s", getActivationDebugLine(contact))
 		} else if err != nil {
@@ -258,11 +241,11 @@ func getActivationDebugLine(contact ActivationContact) string {
 	return fmt.Sprintf("Activation callsignUsed: %s, date: %s, contact: %s, summitId: %s, s2s: %s\n", contact.CallsignUsed, contact.Date, contact.Contact, contact.SummitId, contact.SummitToSummit)
 }
 
-func insertChaseContact(user string, contact ChaseContact) string {
+func insertChaseContact(user string, contact domain.ChaseContact) string {
 	if debugDb {
 		_, _ = fmt.Printf("INSERT CHASE - callsignUsed: %s, date: %s, summit: %s, stationWorked: %s\n", contact.CallsignUsed, contact.Date, contact.Summit, contact.StationWorked)
 	} else {
-		count, err := db.InsertChase(user, contact.CallsignUsed, contact.Date, sotautils.GetWotaIdFromRef(contact.Summit), contact.StationWorked)
+		count, err := db.InsertChase(user, sotautils.GetOperatorFromCallsign(contact.CallsignUsed), contact.Date, sotautils.GetWotaIdFromRef(contact.Summit), contact.StationWorked)
 		if count != 1 {
 			return fmt.Sprintf("Could not insert: %s", getChaseDebugLine(contact))
 		} else if err != nil {
@@ -274,7 +257,7 @@ func insertChaseContact(user string, contact ChaseContact) string {
 	return ""
 }
 
-func getChaseDebugLine(contact ChaseContact) string {
+func getChaseDebugLine(contact domain.ChaseContact) string {
 	return fmt.Sprintf("Chase callsignUsed: callsignUsed: %s, date: %s, summit: %s, stationWorked: %s\n", contact.CallsignUsed, contact.Date, contact.Summit, contact.StationWorked)
 }
 

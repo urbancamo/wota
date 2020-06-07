@@ -21,6 +21,9 @@ const ChaseCheckActivationConfirmationSql = "SELECT COUNT(*) FROM `activator_log
 const ActivationSetConfirmedSql = "UPDATE `activator_log` SET `confirmed` = true WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ?"
 const ChaseInsertWithPointsSql = "INSERT into `chaser_log` (`wkdby`, `ucall`, `wotaid`, `date`, `year`, `stncall`, `points`, `wawpoints`, `points_yr`, `wawpoints_yr`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 
+const ExportChaserSql = "SELECT `wkdby`,`ucall`,`wotaid`,`date`,`year`,`stncall`,`confirmed` FROM `chaser_log` WHERE `wkdby` = ? ORDER BY `date`"
+const ExportActivatorSql = "SELECT `activatedby`,`callused`,`wotaid`,`date`,`year`,`stncall`,`s2s`,`confirmed` FROM `activator_log` WHERE `activatedby` = ? ORDER BY `date`"
+
 // CHASE SQL
 //$wawpoints = 1; $points = 1;
 //$sql = "SELECT * FROM `chaser_log` WHERE `wkdby` = '".$wkdby."' AND `wotaid` = '".$summitid."'";

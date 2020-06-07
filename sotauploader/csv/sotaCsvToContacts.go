@@ -189,7 +189,7 @@ func parseSotaContactsForActivationContact(contacts []SotaContact, operator stri
 			activationContact.Year = sotautils.ConvertSotaYear(contact.Date)
 
 			activationContact.ActivatedBy = operator
-			activationContact.CallUsed = operator
+			activationContact.CallUsed = contact.CallUsed
 			activationContact.UCall = operator
 			activationContact.StnCall = contact.StnWorked
 			activationContact.UCall = sotautils.GetOperatorFromCallsign(contact.StnWorked)
@@ -239,8 +239,12 @@ func getWotaRefFromString(comment string) string {
 	return ""
 }
 
+// The example of G4YSS using GX0OOO has proved that this check isn't valid
+// the WOTA form doesn't do any checks, so I guess we've just got to roll with it here!
 func checkCallUsedIsUs(callUsed string, operator string) bool {
-	return strings.Contains(callUsed, operator)
+	//return strings.Contains(callUsed, operator)
+	// ignore any checks and assume activators know what they're doing!
+	return true
 }
 
 func parseSotaContactsForChaserContacts(contacts []SotaContact, operator string) []ChaserContact {
@@ -263,7 +267,7 @@ func parseSotaContactsForChaserContacts(contacts []SotaContact, operator string)
 			chaserContact.Date = sotautils.ConvertSotaDate(contact.Date, contact.Time)
 			chaserContact.Year = sotautils.ConvertSotaYear(contact.Date)
 
-			chaserContact.WkdBy = operator
+			chaserContact.WkdBy = contact.CallUsed
 			chaserContact.UCall = operator
 			chaserContact.StnCall = sotautils.GetOperatorFromCallsign(contact.StnWorked)
 
