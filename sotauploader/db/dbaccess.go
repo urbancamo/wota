@@ -10,7 +10,7 @@ const ActivationInsertSql = "INSERT INTO `activator_log`(`activatedby`, `calluse
 const ActivationSelectSql = "SELECT COUNT(*) FROM `activator_log` WHERE `activatedby`=? AND `wotaid`=? AND `stncall`=? AND `date`=?"
 
 const ChaseInsertSql = "INSERT INTO `chaser_log`(`wkdby`, `ucall`, `wotaid`, `date`, `year`, `stncall`) VALUES (?,?,?,?,?,?)"
-const ChaseSelectSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `ucall` = ? AND `wotaid` = ? AND `stncall` = ? AND `date` = ?"
+const ChaseSelectSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `wkdby` = ? AND `wotaid` = ? AND `stncall` = ? AND `date` = ?"
 const ChaseSetConfirmedSql = "UPDATE `chaser_log` SET `confirmed` = true WHERE `ucall` = ? AND `wotaid` = ? AND `stncall` = ? AND `date` = ?"
 
 const ChaseWorkedSummitSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `wkdby` = ? AND `wotaid` = ?"
@@ -20,6 +20,9 @@ const ChaseCheckSummitActivatorAnnualPointsSql = "SELECT COUNT(*) FROM `chaser_l
 const ChaseCheckActivationConfirmationSql = "SELECT COUNT(*) FROM `activator_log` WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ?"
 const ActivationSetConfirmedSql = "UPDATE `activator_log` SET `confirmed` = true WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ?"
 const ChaseInsertWithPointsSql = "INSERT into `chaser_log` (`wkdby`, `ucall`, `wotaid`, `date`, `year`, `stncall`, `points`, `wawpoints`, `points_yr`, `wawpoints_yr`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+
+const ExportChaserSql = "SELECT `wkdby`,`ucall`,`wotaid`,`date`,`year`,`stncall`,`confirmed` FROM `chaser_log` WHERE `wkdby` = ? ORDER BY `date`"
+const ExportActivatorSql = "SELECT `activatedby`,`callused`,`wotaid`,`date`,`year`,`stncall`,`s2s`,`confirmed` FROM `activator_log` WHERE `activatedby` = ? ORDER BY `date`"
 
 // CHASE SQL
 //$wawpoints = 1; $points = 1;
@@ -104,9 +107,9 @@ func confirmActivation(user string, summitId int, callUsed string, date string) 
 	return err
 }
 
-func hasActivation(user string, date string, callUsed string, summitId int) (bool, error) {
+func hasActivation(user string, date string, stnCall string, summitId int) (bool, error) {
 	var count int = 0
-	err := dbMap[WotaDb].QueryRow(ActivationSelectSql, user, summitId, callUsed, date).Scan(&count)
+	err := dbMap[WotaDb].QueryRow(ActivationSelectSql, user, summitId, stnCall, date).Scan(&count)
 	return count > 0, err
 }
 
@@ -157,7 +160,7 @@ func InsertActivation(user string, callsignUsed string, date string, contact str
 	}
 
 	// Check whether this activation record is already in the database
-	hasAct, err := hasActivation(user, date, callsignUsed, summitId)
+	hasAct, err := hasActivation(user, truncateToDay(date), sotautils.GetOperatorFromCallsign(contact), summitId)
 	if err != nil {
 		return 0, err
 	}
@@ -170,7 +173,7 @@ func InsertActivation(user string, callsignUsed string, date string, contact str
 	// See if there is the chase end of this contact, if there is then confirm it now rather than waiting for the
 	// batch job to run
 	var chase bool
-	chase, err = hasChase(contact, summitId, user, date)
+	chase, err = hasChase(contact, summitId, user, truncateToDay(date))
 	if err != nil {
 		return 1, nil
 	}
@@ -199,7 +202,7 @@ func InsertChase(user string, callsignUsed string, date string, summitId int, st
 
 	// Check whether this chase record is already in the database
 	var chaseExists bool
-	chaseExists, err = hasChase(user, summitId, stationWorked, date)
+	chaseExists, err = hasChase(user, summitId, stationWorked, truncateToDay(date))
 	if err != nil {
 		return 1, nil
 	}
@@ -232,7 +235,7 @@ func InsertChase(user string, callsignUsed string, date string, summitId int, st
 	var summitAnnualPoints = 1
 
 	var hasSummitAnnualPoints bool
-	hasSummitAnnualPoints, err = hasChaseSummitAnnualPoints(date, user, summitId)
+	hasSummitAnnualPoints, err = hasChaseSummitAnnualPoints(truncateToDay(date), user, summitId)
 	if err != nil {
 		return 0, err
 	}
@@ -241,7 +244,7 @@ func InsertChase(user string, callsignUsed string, date string, summitId int, st
 	}
 
 	var hasSummitActivatorAnnualPoints bool
-	hasSummitActivatorAnnualPoints, err = hasChaseSummitActivatorAnnualPoints(date, user, summitId, stationWorked)
+	hasSummitActivatorAnnualPoints, err = hasChaseSummitActivatorAnnualPoints(truncateToDay(date), user, summitId, stationWorked)
 	if err != nil {
 		return 0, err
 	}
@@ -250,7 +253,7 @@ func InsertChase(user string, callsignUsed string, date string, summitId int, st
 	}
 
 	var confirmed = false
-	confirmed, err = hasWorkedChaserFromSummit(stationWorked, summitId, callsignUsed, date)
+	confirmed, err = hasWorkedChaserFromSummit(stationWorked, summitId, callsignUsed, truncateToDay(date))
 	if err != nil {
 		return 0, err
 	}
@@ -291,4 +294,8 @@ func boolToInt(val bool) int {
 		return 1
 	}
 	return 0
+}
+
+func truncateToDay(date string) string {
+	return date[0:10]
 }

@@ -86,7 +86,7 @@ func GetWotaIdFromSummitCode(summitCode string) int {
 	if len(summitParts) != 2 {
 		return 0
 	}
-	if summitParts[0] != "LD" {
+	if summitParts[0] != "LD" && summitParts[0] != "G/LD" {
 		// try for a WOTA ID instead
 		return GetWotaIdFromRef(summitCode)
 	}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOTA CSV Upload</title>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.tabletojson.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.tabledit.min.js"></script>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h3>SOTA/WOTA CSV File Uploader</h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form action="/cgi-bin/sota-uploader/check_form" method="post" enctype="multipart/form-data">
+                <p>Logged in as: <b>{{.User}}</b></p>
+                <p>SOTA CSV File: <input type="file" name="filename" /></p>
+                <span>WOTA Id: </span>
+                <select name="overrideWota">
+                    <option id="0">From SOTA ID in CSV</option>{{range .WotaOptions}}
+                    <option id="{{.Id}}">{{.Name}} ({{.Ref}})</option>{{end}}
+                </select>
+                <p>&nbsp;</p>
+                <p>
+                    <input type="button" value="Back" onclick="history.back()">&nbsp;&nbsp;
+                    <input type="submit" name="Submit" value="Submit Form" />
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
