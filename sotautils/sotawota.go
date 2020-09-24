@@ -146,8 +146,8 @@ func ConvertSotaDate(sotaDate string, sotaTime string) string {
 		hour = sotaTime[0:2]
 		min = sotaTime[2:4]
 	} else {
-		hour = sotaTime[0:2]
-		min = sotaTime[3:5]
+		hour = sotaTime[0:1]
+		min = sotaTime[1:3]
 	}
 	return fmt.Sprintf("%04s-%02s-%02s %02s:%02s:00", year, month, day, hour, min)
 }

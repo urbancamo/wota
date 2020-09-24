@@ -210,7 +210,7 @@ func getFile(r *http.Request) (string, string) {
 	content := "UNKNOWN"
 
 	if debugIn {
-		filename = "test/csv/2019-05-18-04-Seat-Sandal-SOTA.csv"
+		filename = "test/csv/2020-09-19-Thunacar-Knott-WOTA.csv"
 		fileContentInBytes, err := ioutil.ReadFile(filename)
 		if err == nil {
 			content = string(fileContentInBytes)
