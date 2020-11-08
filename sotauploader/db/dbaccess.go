@@ -6,10 +6,10 @@ import (
 	"wota/sotautils"
 )
 
-const ActivationInsertSql = "INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `year`, `stncall`, `ucall`, `s2s`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?)"
+const ActivationInsertSql = "INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?)"
 const ActivationSelectSql = "SELECT COUNT(*) FROM `activator_log` WHERE `activatedby`=? AND `wotaid`=? AND `stncall`=? AND `date`=?"
 
-const ChaseInsertSql = "INSERT INTO `chaser_log`(`wkdby`, `ucall`, `wotaid`, `date`, `year`, `stncall`) VALUES (?,?,?,?,?,?)"
+const ChaseInsertSql = "INSERT INTO `chaser_log`(`wkdby`, `ucall`, `wotaid`, `date`, `time`, `year`, `stncall`) VALUES (?,?,?,?,?,?,?)"
 const ChaseSelectSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `wkdby` = ? AND `wotaid` = ? AND `stncall` = ? AND `date` = ?"
 const ChaseSetConfirmedSql = "UPDATE `chaser_log` SET `confirmed` = true WHERE `ucall` = ? AND `wotaid` = ? AND `stncall` = ? AND `date` = ?"
 
@@ -18,8 +18,8 @@ const ChaseWorkedActivatorOnSummitSql = "SELECT COUNT(*) FROM `chaser_log` WHERE
 const ChaseCheckSumnitAnnualPointsSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `year` = ? AND `wkdby` = ? AND `wotaid` = ?"
 const ChaseCheckSummitActivatorAnnualPointsSql = "SELECT COUNT(*) FROM `chaser_log` WHERE `year` = ? AND `wkdby` = ? AND `wotaid` = ? AND `stncall` = ?"
 const ChaseCheckActivationConfirmationSql = "SELECT COUNT(*) FROM `activator_log` WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ?"
-const ActivationSetConfirmedSql = "UPDATE `activator_log` SET `confirmed` = true WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ?"
-const ChaseInsertWithPointsSql = "INSERT into `chaser_log` (`wkdby`, `ucall`, `wotaid`, `date`, `year`, `stncall`, `points`, `wawpoints`, `points_yr`, `wawpoints_yr`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+const ActivationSetConfirmedSql = "UPDATE `activator_log` SET `confirmed` = true WHERE `callused` = ? AND `wotaid` = ? AND `ucall` = ? AND `date` = ? AND `time` = ?"
+const ChaseInsertWithPointsSql = "INSERT into `chaser_log` (`wkdby`, `ucall`, `wotaid`, `date`, `time`, `year`, `stncall`, `points`, `wawpoints`, `points_yr`, `wawpoints_yr`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
 
 const ExportChaserSql = "SELECT `wkdby`,`ucall`,`wotaid`,`date`,`year`,`stncall`,`confirmed` FROM `chaser_log` WHERE `wkdby` = ? ORDER BY `date`"
 const ExportActivatorSql = "SELECT `activatedby`,`callused`,`wotaid`,`date`,`year`,`stncall`,`s2s`,`confirmed` FROM `activator_log` WHERE `activatedby` = ? ORDER BY `date`"
@@ -98,7 +98,7 @@ func PrepareStatementsForInsert() error {
 }
 
 func confirmChase(user string, summitId int, callUsed string, date string) error {
-	_, err := chaseSetConfirmedSql.Exec(user, summitId, callUsed, date)
+	_, err := chaseSetConfirmedSql.Exec(user, summitId, callUsed, date, date)
 	return err
 }
 
@@ -153,7 +153,12 @@ func hasWorkedChaserFromSummit(callUsed string, summitId int, user string, date 
 
 func InsertActivation(user string, callsignUsed string, date string, contact string, summitId int, summitToSummit string) (int64, error) {
 	s2s := false
-	year := date[0:4]
+	year := date[0:4] // '2020-11-07 10:07:00'
+	//  01234567890123456789
+	//  00000000001111111111
+	time := date[11:19] // '2020-11-07 10:07:00'
+	//  01234567890123456789
+	//  00000000001111111111
 
 	if summitToSummit == "Y" {
 		s2s = true
@@ -179,8 +184,8 @@ func InsertActivation(user string, callsignUsed string, date string, contact str
 	}
 
 	// If not insert the record
-	// INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `year`, `stncall`, `ucall`, `s2s`)
-	result, err := activationInsertSql.Exec(user, callsignUsed, summitId, date, year, sotautils.GetOperatorFromCallsign(contact), contact, boolToInt(s2s), boolToInt(chase))
+	// INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`)
+	result, err := activationInsertSql.Exec(user, callsignUsed, summitId, date, time, year, sotautils.GetOperatorFromCallsign(contact), contact, boolToInt(s2s), boolToInt(chase))
 	if err != nil {
 		return 0, err
 	}
@@ -198,6 +203,8 @@ func InsertActivation(user string, callsignUsed string, date string, contact str
 
 func InsertChase(user string, callsignUsed string, date string, summitId int, stationWorked string) (int64, error) {
 	year := date[0:4]
+	time := date[11:19]
+
 	var err error
 
 	// Check whether this chase record is already in the database
@@ -258,7 +265,7 @@ func InsertChase(user string, callsignUsed string, date string, summitId int, st
 		return 0, err
 	}
 
-	result, err := chaseInsertWithPointsSql.Exec(user, callsignUsed, summitId, date, year, stationWorked, summitPoints, workedAllWainwrightsPoints, summitAnnualPoints, workedAllWainwrightsAnnualPoints, boolToInt(confirmed))
+	result, err := chaseInsertWithPointsSql.Exec(user, callsignUsed, summitId, date, time, year, stationWorked, summitPoints, workedAllWainwrightsPoints, summitAnnualPoints, workedAllWainwrightsAnnualPoints, boolToInt(confirmed))
 	if err != nil {
 		return 0, err
 	}

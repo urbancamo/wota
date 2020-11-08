@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e570908-176b-418c-bfed-fea109f8d2a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/check/check_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/check/check_form.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotautils/sotawota.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotautils/sotawota.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotauploader/db/dbaccess.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/db/dbaccess.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +56,7 @@
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sotauploader/check" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -86,7 +84,7 @@
       <recent name="$PROJECT_DIR$/sotautils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.check_form">
+  <component name="RunManager" selected="Go Build.process_form">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="wota" />
       <working_directory value="$PROJECT_DIR$/bin" />
@@ -100,7 +98,7 @@
     </configuration>
     <configuration name="check_form" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="wota" />
-      <working_directory value="$PROJECT_DIR$/sotauploader" />
+      <working_directory value="$PROJECT_DIR$/sotauploader/check" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/sotauploader/check/check_form.go" />
       <package value="wota" />
@@ -181,8 +179,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.check_form" />
         <item itemvalue="Go Build.process_form" />
+        <item itemvalue="Go Build.check_form" />
         <item itemvalue="Go Build.getalerts" />
         <item itemvalue="Go Build.go build dbtest.go (1)" />
         <item itemvalue="Go Build.go build dbaccess.go" />
@@ -217,37 +215,49 @@
     <option name="LAST_COMMIT_MESSAGE" value="Remove BOM if present from CSV input file to fix issue G8CPZ had uploading his CSV extract file." />
   </component>
   <component name="WindowStateProjectService">
-    <state width="2518" height="267" key="GridCell.Tab.0.bottom" timestamp="1600976011813">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state x="805" y="423" width="430" height="486" key="FileChooserDialogImpl" timestamp="1604865821178">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state x="805" y="423" width="430" height="486" key="FileChooserDialogImpl/0.31.2050.1263@0.31.2050.1263" timestamp="1604865821178" />
+    <state width="2008" height="288" key="GridCell.Tab.0.bottom" timestamp="1604866500249">
+      <screen x="0" y="31" width="2050" height="1263" />
+    </state>
+    <state width="2008" height="288" key="GridCell.Tab.0.bottom/0.31.2050.1263@0.31.2050.1263" timestamp="1604866500249" />
     <state width="2518" height="267" key="GridCell.Tab.0.bottom/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011813" />
-    <state width="2518" height="267" key="GridCell.Tab.0.center" timestamp="1600976011811">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="288" key="GridCell.Tab.0.center" timestamp="1604866500247">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="288" key="GridCell.Tab.0.center/0.31.2050.1263@0.31.2050.1263" timestamp="1604866500247" />
     <state width="2518" height="267" key="GridCell.Tab.0.center/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011811" />
-    <state width="2518" height="267" key="GridCell.Tab.0.left" timestamp="1600976011808">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="288" key="GridCell.Tab.0.left" timestamp="1604866500246">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="288" key="GridCell.Tab.0.left/0.31.2050.1263@0.31.2050.1263" timestamp="1604866500246" />
     <state width="2518" height="267" key="GridCell.Tab.0.left/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011808" />
-    <state width="2518" height="267" key="GridCell.Tab.0.right" timestamp="1600976011811">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="288" key="GridCell.Tab.0.right" timestamp="1604866500248">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="288" key="GridCell.Tab.0.right/0.31.2050.1263@0.31.2050.1263" timestamp="1604866500248" />
     <state width="2518" height="267" key="GridCell.Tab.0.right/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011811" />
-    <state width="2518" height="267" key="GridCell.Tab.1.bottom" timestamp="1600976011819">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="412" key="GridCell.Tab.1.bottom" timestamp="1604865747379">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="412" key="GridCell.Tab.1.bottom/0.31.2050.1263@0.31.2050.1263" timestamp="1604865747379" />
     <state width="2518" height="267" key="GridCell.Tab.1.bottom/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011819" />
-    <state width="2518" height="267" key="GridCell.Tab.1.center" timestamp="1600976011816">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="412" key="GridCell.Tab.1.center" timestamp="1604865747377">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="412" key="GridCell.Tab.1.center/0.31.2050.1263@0.31.2050.1263" timestamp="1604865747377" />
     <state width="2518" height="267" key="GridCell.Tab.1.center/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011816" />
-    <state width="2518" height="267" key="GridCell.Tab.1.left" timestamp="1600976011814">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="412" key="GridCell.Tab.1.left" timestamp="1604865747377">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="412" key="GridCell.Tab.1.left/0.31.2050.1263@0.31.2050.1263" timestamp="1604865747377" />
     <state width="2518" height="267" key="GridCell.Tab.1.left/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011814" />
-    <state width="2518" height="267" key="GridCell.Tab.1.right" timestamp="1600976011817">
-      <screen x="0" y="31" width="2560" height="1337" />
+    <state width="2008" height="412" key="GridCell.Tab.1.right" timestamp="1604865747378">
+      <screen x="0" y="31" width="2050" height="1263" />
     </state>
+    <state width="2008" height="412" key="GridCell.Tab.1.right/0.31.2050.1263@0.31.2050.1263" timestamp="1604865747378" />
     <state width="2518" height="267" key="GridCell.Tab.1.right/0.31.2560.1337@0.31.2560.1337" timestamp="1600976011817" />
   </component>
   <component name="XDebuggerManager">
