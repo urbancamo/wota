@@ -141,10 +141,15 @@ func ConvertSotaDate(sotaDate string, sotaTime string) string {
 		year = "20" + year
 	}
 
+	// times can be one of three supported format: 0931, 09:31 or 931.
 	var hour, min string
 	if len(sotaTime) == 4 {
 		hour = sotaTime[0:2]
 		min = sotaTime[2:4]
+	} else if len(sotaTime) == 5 && sotaTime[2] == ':' {
+		// From G8CPZ extra character in string where time is '12:14' - contains a colon separator
+		hour = sotaTime[0:2]
+		min = sotaTime[3:5]
 	} else {
 		hour = sotaTime[0:1]
 		min = sotaTime[1:3]
@@ -159,5 +164,11 @@ func ConvertSotaYear(sotaDate string) int {
 		dateFields = strings.Split(sotaDate, "-")
 	}
 	year, _ := strconv.Atoi(dateFields[2])
-	return year + 2000
+	if year < 1976 {
+		return year
+	}
+	{
+		return year + 2000
+	}
+	return year
 }

@@ -79,11 +79,11 @@ const V2P_STN_WORKED = 7
 const V2P_THEIR_SOTA_ID = 8
 const V2P_COMMENT = 9
 
-func ParseCsv(csvData string, operator string) (Contacts, bool) {
+func ParseCsv(csvData string, operator string, summitOverride string) (Contacts, bool) {
 	r := csv.NewReader(strings.NewReader(csvData))
 	sotautils.LoadSotaWotaMapId()
 
-	sotaContacts := parseCsvForSotaContacts(r)
+	sotaContacts := parseCsvForSotaContacts(r, summitOverride)
 
 	// If there any errors in the Sota Contacts, don't proceed
 
@@ -110,7 +110,7 @@ func Ok(sotaContacts []SotaContact) bool {
 	return ok
 }
 
-func parseCsvForSotaContacts(r *csv.Reader) []SotaContact {
+func parseCsvForSotaContacts(r *csv.Reader, summitOverride string) []SotaContact {
 	var sotaContacts []SotaContact
 
 	for {
@@ -124,7 +124,7 @@ func parseCsvForSotaContacts(r *csv.Reader) []SotaContact {
 			contact.Error = err.Error()
 		}
 
-		contact, err = readSotaContactFromRecord(fields)
+		contact, err = readSotaContactFromRecord(fields, summitOverride)
 		if err != nil {
 			contact.Error = err.Error()
 		}
@@ -134,7 +134,7 @@ func parseCsvForSotaContacts(r *csv.Reader) []SotaContact {
 	return sotaContacts
 }
 
-func readSotaContactFromRecord(fields []string) (SotaContact, error) {
+func readSotaContactFromRecord(fields []string, summitOverride string) (SotaContact, error) {
 	var contact SotaContact
 	if len(fields) < 8 {
 		return contact, errors.New("CSV file doesn't contain at least eight CSV fields as required")
@@ -146,7 +146,11 @@ func readSotaContactFromRecord(fields []string) (SotaContact, error) {
 	if v2pFile {
 		contact.Version = strings.ToUpper(fields[V2P_VERSION])
 		contact.CallUsed = strings.ToUpper(fields[V2P_CALL_USED])
-		contact.MySummitId = strings.ToUpper(fields[V2P_MY_SOTA_ID])
+		if summitOverride != "" {
+			contact.MySummitId = summitOverride
+		} else {
+			contact.MySummitId = strings.ToUpper(fields[V2P_MY_SOTA_ID])
+		}
 		contact.Date = fields[V2P_DATE]
 		contact.Time = fields[V2P_TIME]
 		contact.Frequency = strings.ToUpper(fields[V2P_FREQUENCY])
@@ -162,7 +166,11 @@ func readSotaContactFromRecord(fields []string) (SotaContact, error) {
 		contact.CallUsed = strings.ToUpper(fields[V1_CALL_USED])
 		contact.Date = fields[V1_DATE]
 		contact.Time = fields[V1_TIME]
-		contact.MySummitId = strings.ToUpper(fields[V1_MY_SOTA_ID])
+		if summitOverride != "" {
+			contact.MySummitId = summitOverride
+		} else {
+			contact.MySummitId = strings.ToUpper(fields[V1_MY_SOTA_ID])
+		}
 		contact.Frequency = strings.ToUpper(fields[V1_FREQUENCY])
 		contact.Mode = strings.ToUpper(fields[V1_MODE])
 		contact.StnWorked = strings.ToUpper(fields[V1_STN_WORKED])
@@ -184,7 +192,11 @@ func parseSotaContactsForActivationContact(contacts []SotaContact, operator stri
 			// Candidate contact, fill in as we go, might not make it to the end
 			var activationContact ActivationContact
 
-			activationContact.WotaId = sotautils.GetWotaIdFromSummitCode(contact.MySummitId)
+			if checkSummitIsAWota(contact.MySummitId) {
+				activationContact.WotaId = sotautils.GetWotaIdFromRef(contact.MySummitId)
+			} else {
+				activationContact.WotaId = sotautils.GetWotaIdFromSummitCode(contact.MySummitId)
+			}
 			activationContact.Date = sotautils.ConvertSotaDate(contact.Date, contact.Time)
 			activationContact.Year = sotautils.ConvertSotaYear(contact.Date)
 

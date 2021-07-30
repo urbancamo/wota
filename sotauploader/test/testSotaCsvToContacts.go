@@ -97,15 +97,9 @@ func main() {
 	var contacts csv.Contacts
 	var err error
 
-	// Run through every file to make sure there are no major errors
-	for _, filename := range filenames {
-		contacts, err = loadAndParseCsv("csv/" + filename)
-		fmt.Printf("Processed %s resulting in %d activator and %d chaser contacts\n", filename, len(contacts.ActivationContacts), len(contacts.ChaserContacts))
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-	}
+	contacts, _ = loadAndParseCsv("csv/2021-03-29T153645-G8CPZ.csv")
+	checkContactNumberIsCorrect("activator", len(contacts.ActivationContacts), 4)
+	checkContactNumberIsCorrect("chaser", len(contacts.ChaserContacts), 0)
 
 	contacts, _ = loadAndParseCsvWithUser("csv/G4YSS_activationID_358852.csv", "GX0OOO")
 	contacts, _ = loadAndParseCsvWithUser("csv/G4YSS_activationID_358857.csv", "GX0OOO")
@@ -155,6 +149,16 @@ func main() {
 	contacts, err = loadAndParseCsv("testSotaCsvToContacts.go")
 	if err != nil {
 		fmt.Printf("%s", err.Error())
+	}
+
+	// Run through every file to make sure there are no major errors
+	for _, filename := range filenames {
+		contacts, err = loadAndParseCsv("csv/" + filename)
+		fmt.Printf("Processed %s resulting in %d activator and %d chaser contacts\n", filename, len(contacts.ActivationContacts), len(contacts.ChaserContacts))
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 }
 

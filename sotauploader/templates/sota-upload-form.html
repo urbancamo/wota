@@ -15,7 +15,7 @@
     <h3>SOTA/WOTA CSV File Uploader</h3>
     <div class="panel panel-default">
         <div class="panel-body">
-            <form action="/cgi-bin/sota-uploader/check_form" method="post" enctype="multipart/form-data">
+            <form action="/cgi-bin/sota-uploader/check_form" method="post" enctype="multipart/form-data" name="check_form">
                 <p>Logged in as: <b>{{.User}}</b></p>
                 <p>SOTA CSV File: <input type="file" name="filename" /></p>
                 <span>WOTA Id: </span>

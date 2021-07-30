@@ -36,6 +36,7 @@ type CheckFormView struct {
 	Activations []ActivationsView
 	Chases      []ChaseView
 	SummitCount int
+	Summit      string
 	Errors      string
 }
 
@@ -63,10 +64,11 @@ func main() {
 	if err := cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var user = UNKNOWN
 		var filename = UNKNOWN
+		var summit = UNKNOWN
 		var csvData = UNKNOWN
 		var summitCount int
 
-		filename, csvData = getFile(r)
+		filename, summit, csvData = parseRequest(r)
 
 		header := w.Header()
 		header.Set("Content-Type", "text/html; charset=utf-8")
@@ -91,7 +93,7 @@ func main() {
 			}
 
 			// Store a copy of the CSV file uploaded
-			logFilename := GetFilename("/home/wotasite/logs/sota-uploader", user)
+			logFilename := GetFilename("/home/wotaorgu/logs/sota-uploader", user)
 			err = WriteToFile(logFilename, csvData)
 			if err != nil {
 				errs.WriteString(err.Error())
@@ -102,7 +104,7 @@ func main() {
 				errs.WriteString("You must be logged in to use the SOTA submit form\n")
 			} else {
 				var csvParsed bool
-				contacts, csvParsed = csv.ParseCsv(csvData, user)
+				contacts, csvParsed = csv.ParseCsv(csvData, user, summit)
 				if !csvParsed {
 					errs.WriteString("Error parsing CSV file - please check content\n")
 				}
@@ -118,7 +120,7 @@ func main() {
 			templateLoaded := false
 
 			if err == nil {
-				formData := getFormData(user, filename, csvData, contacts, summitCount, errs.String())
+				formData := getFormData(user, filename, csvData, contacts, summitCount, summit, errs.String())
 				tmpl, err := template.ParseFiles("../templates/sota-upload-check.html")
 
 				if err == nil {
@@ -161,11 +163,12 @@ func openDbs() error {
 	return err
 }
 
-func getFormData(user string, filename string, csvData string, contacts csv.Contacts, summitCount int, errors string) CheckFormView {
+func getFormData(user string, filename string, csvData string, contacts csv.Contacts, summitCount int, summit string, errors string) CheckFormView {
 	var formData CheckFormView
 	formData.User = user
 	formData.Filename = filename
 	formData.CsvData = csvData
+	formData.Summit = summit
 
 	for i, activationContact := range contacts.ActivationContacts {
 		formData.Activations = append(formData.Activations, getActivationView(i, activationContact))
@@ -205,28 +208,32 @@ func getChaseView(id int, contact csv.ChaserContact) ChaseView {
 	return view
 }
 
-func getFile(r *http.Request) (string, string) {
-	filename := "UNKNOWN"
-	content := "UNKNOWN"
+func parseRequest(r *http.Request) (string, string, string) {
+	formName := UNKNOWN
+	filename := UNKNOWN
+	summit := UNKNOWN
+	content := UNKNOWN
 
 	if debugIn {
-		filename = "test/csv/2020-09-19-Thunacar-Knott-WOTA.csv"
+		filename = "/home/msw/go/src/wota/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv"
 		fileContentInBytes, err := ioutil.ReadFile(filename)
 		if err == nil {
 			content = string(fileContentInBytes)
 		}
+		summit = "LDW-076"
 	} else {
 		readForm, err := r.MultipartReader()
 		if err != nil {
 			errs.WriteString(err.Error())
 		} else {
+			summit = ""
 			for {
 				part, errPart := readForm.NextPart()
 				if errPart == io.EOF {
 					break
 				}
-				filename = part.FormName()
-				if filename == "filename" {
+				formName = part.FormName()
+				if formName == "filename" {
 					filename = part.FileName()
 
 					buf := new(bytes.Buffer)
@@ -236,12 +243,22 @@ func getFile(r *http.Request) (string, string) {
 					byteData := buf.Bytes()
 					strippedByteData := bytes.TrimPrefix(byteData, UTF8Bom)
 					content = string(strippedByteData)
+				} else {
+					buf := new(bytes.Buffer)
+					_, _ = buf.ReadFrom(part)
+					byteData := buf.Bytes()
+					partData := string(byteData)
+					// Extract summit reference if specified
+					start := strings.Index(partData, "(")
+					end := strings.Index(partData, ")")
+					if start != -1 && end != -1 {
+						summit = partData[start+1 : end]
+					}
 				}
-
 			}
 		}
 	}
-	return filename, content
+	return filename, summit, content
 }
 
 func GetFilename(basePath string, callSign string) string {
