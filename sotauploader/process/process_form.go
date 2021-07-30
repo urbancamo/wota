@@ -121,7 +121,7 @@ func handleCgi() {
 		}
 
 		// Store a copy of the json result
-		logFilename := GetFilename("/home/wotasite/logs/sota-uploader", user)
+		logFilename := GetFilename("/home/wotaorgu/logs/sota-uploader", user)
 		err = WriteToFile(logFilename, jsonData)
 		if err != nil {
 			errs.WriteString(err.Error())
