@@ -146,10 +146,10 @@ func readSotaContactFromRecord(fields []string, summitOverride string) (SotaCont
 	if v2pFile {
 		contact.Version = strings.ToUpper(fields[V2P_VERSION])
 		contact.CallUsed = strings.ToUpper(fields[V2P_CALL_USED])
-		if summitOverride != "" {
-			contact.MySummitId = summitOverride
-		} else {
+		if summitOverride == "" {
 			contact.MySummitId = strings.ToUpper(fields[V2P_MY_SOTA_ID])
+		} else {
+			contact.MySummitId = summitOverride
 		}
 		contact.Date = fields[V2P_DATE]
 		contact.Time = fields[V2P_TIME]
@@ -166,10 +166,10 @@ func readSotaContactFromRecord(fields []string, summitOverride string) (SotaCont
 		contact.CallUsed = strings.ToUpper(fields[V1_CALL_USED])
 		contact.Date = fields[V1_DATE]
 		contact.Time = fields[V1_TIME]
-		if summitOverride != "" {
-			contact.MySummitId = summitOverride
-		} else {
+		if summitOverride == "" {
 			contact.MySummitId = strings.ToUpper(fields[V1_MY_SOTA_ID])
+		} else {
+			contact.MySummitId = summitOverride
 		}
 		contact.Frequency = strings.ToUpper(fields[V1_FREQUENCY])
 		contact.Mode = strings.ToUpper(fields[V1_MODE])
@@ -192,11 +192,7 @@ func parseSotaContactsForActivationContact(contacts []SotaContact, operator stri
 			// Candidate contact, fill in as we go, might not make it to the end
 			var activationContact ActivationContact
 
-			if checkSummitIsAWota(contact.MySummitId) {
-				activationContact.WotaId = sotautils.GetWotaIdFromRef(contact.MySummitId)
-			} else {
-				activationContact.WotaId = sotautils.GetWotaIdFromSummitCode(contact.MySummitId)
-			}
+			activationContact.WotaId = sotautils.GetWotaIdFromSummitCode(contact.MySummitId)
 			activationContact.Date = sotautils.ConvertSotaDate(contact.Date, contact.Time)
 			activationContact.Year = sotautils.ConvertSotaYear(contact.Date)
 

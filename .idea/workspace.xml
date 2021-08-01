@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e570908-176b-418c-bfed-fea109f8d2a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wota.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wota.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cgitest/readtest..go" beforeDir="false" afterPath="$PROJECT_DIR$/cgitest/readtest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exportcsv/exportcsv.go" beforeDir="false" afterPath="$PROJECT_DIR$/exportcsv/exportcsv.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotaalerts/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaalerts/dbconfig.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotaspots/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaspots/dbconfig.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/check/check_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/check/check_form.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/process/process_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/process/process_form.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/templates/sota-upload-check.html" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/templates/sota-upload-check.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/templates/sota-upload-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/templates/sota-upload-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotautils/sotawota.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotautils/sotawota.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +239,8 @@
     <MESSAGE value="sotauploader commits and starting work on mobile page" />
     <MESSAGE value="Remove BOM if present from CSV input file to fix issue G8CPZ had uploading his CSV extract file." />
     <MESSAGE value=" * add feature to store time in database" />
-    <option name="LAST_COMMIT_MESSAGE" value=" * add feature to store time in database" />
+    <MESSAGE value=" * various stuff I didn't commit for a while&#10; * added support for the drop down on the SOTA Uploader" />
+    <option name="LAST_COMMIT_MESSAGE" value=" * various stuff I didn't commit for a while&#10; * added support for the drop down on the SOTA Uploader" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
