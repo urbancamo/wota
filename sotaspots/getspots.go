@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
-	"wota/sotautils"
+
+	"github.com/urbancamo/wota/sotautils"
 )
 
 type SotaSpot struct {
@@ -74,7 +75,7 @@ func getSpots() []SotaSpot {
 			log.Fatal(err)
 		} else {
 			defer response.Body.Close()
-			body, err2 := ioutil.ReadAll(response.Body)
+			body, err2 := io.ReadAll(response.Body)
 			if err2 != nil {
 				fmt.Println("error:", err2)
 			}

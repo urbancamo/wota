@@ -5,16 +5,16 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/cgi"
 	"os"
 	"strings"
 	"time"
-	"wota/domain"
-	"wota/sotauploader/db"
-	"wota/sotauploader/utils"
-	"wota/sotautils"
+
+	"github.com/urbancamo/wota/domain"
+	"github.com/urbancamo/wota/sotauploader/db"
+	"github.com/urbancamo/wota/sotauploader/utils"
+	"github.com/urbancamo/wota/sotautils"
 )
 
 const ActivationContacts = "Activation Contacts"
@@ -29,6 +29,8 @@ type ActivationContact struct {
 	SummitName     string `json:"Summit Name"`
 	Contact        string `json:"Contact"`
 	SummitToSummit string `json:"Summit to Summit"`
+	Band           string `json:"Band"`
+	Mode           string `json:"Mode"`
 }
 
 type UploadResult struct {
@@ -58,7 +60,7 @@ func handleCgi() {
 
 		var uploadType = "UNDETERMINED"
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			errs.WriteString(err.Error())
 		}
@@ -141,7 +143,7 @@ func handleFile() string {
 	var user = "M0NOM"
 	var fileContentInBytes []byte
 	var processErrs string
-	fileContentInBytes, err = ioutil.ReadFile("json/activationTest.json")
+	fileContentInBytes, err = os.ReadFile("json/activationTest.json")
 
 	if !debugDb {
 		db.Init()
@@ -165,7 +167,7 @@ func handleFile() string {
 		errs.WriteString(err.Error())
 	}
 
-	fileContentInBytes, err = ioutil.ReadFile("json/chaseTest.json")
+	fileContentInBytes, err = os.ReadFile("json/chaseTest.json")
 	if err == nil {
 		processErrs = process(user, ChaseContacts, fileContentInBytes)
 		if processErrs != "" {
@@ -225,7 +227,7 @@ func insertActivationContact(user string, contact ActivationContact) string {
 	if debugDb {
 		_, _ = fmt.Printf("INSERT ACTIVATION - callsignUsed: %s, date: %s, contact: %s, summitId: %s, s2s: %s\n", contact.CallsignUsed, contact.Date, contact.Contact, contact.SummitId, contact.SummitToSummit)
 	} else {
-		count, err := db.InsertActivation(user, sotautils.GetOperatorFromCallsign(contact.CallsignUsed), contact.Date, contact.Contact, sotautils.GetWotaIdFromRef(contact.SummitId), contact.SummitToSummit)
+		count, err := db.InsertActivation(user, sotautils.GetOperatorFromCallsign(contact.CallsignUsed), contact.Date, contact.Contact, sotautils.GetWotaIdFromRef(contact.SummitId), contact.SummitToSummit, contact.Band, contact.Mode)
 		if count != 1 {
 			return fmt.Sprintf("Could not insert: %s", getActivationDebugLine(contact))
 		} else if err != nil {

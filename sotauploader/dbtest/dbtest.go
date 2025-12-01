@@ -4,7 +4,8 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"strings"
-	"wota/sotauploader/db"
+
+	"github.com/urbancamo/wota/sotauploader/db"
 )
 
 func main() {

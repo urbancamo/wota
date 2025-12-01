@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/cgi"
 	"strings"
-	"wota/sotauploader/db"
-	"wota/sotauploader/utils"
+
+	"github.com/urbancamo/wota/sotauploader/db"
+	"github.com/urbancamo/wota/sotauploader/utils"
 )
 
 const ActivationContacts = "Activation Contacts"
@@ -64,7 +65,7 @@ func handleCgi() {
 
 		var uploadType = "UNDETERMINED"
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			errs.WriteString(err.Error())
 		}
@@ -99,11 +100,11 @@ func handleCgi() {
 					// Determine if activation or chase data are required
 					jsonContent := string(body)
 					if strings.Contains(jsonContent, "\"activation") {
-						exportType = ActivationContacts
-						results.WriteString(process(user, exportType, body))
+						uploadType = ActivationContacts
+						results.WriteString(process(user, uploadType, body))
 					} else {
-						exportType = ChaseContacts
-						results.WriteString(process(user, exportType, body))
+						uploadType = ChaseContacts
+						results.WriteString(process(user, uploadType, body))
 					}
 					results.WriteString("Processing Complete\n")
 				}
@@ -151,14 +152,14 @@ func process(user string, exportType string, body []byte) string {
 		}
 	}
 
-	if uploadType == ActivationContacts {
+	if exportType == ActivationContacts {
 		var activationContacts []ActivationContact
 		err := json.Unmarshal(body, &activationContacts)
 		if err != nil {
 			return err.Error()
 		}
 		return processActivationContacts(user, activationContacts)
-	} else if uploadType == ChaseContacts {
+	} else if exportType == ChaseContacts {
 		var chaseContacts []ChaseContact
 		err := json.Unmarshal(body, &chaseContacts)
 		if err != nil {
@@ -166,7 +167,7 @@ func process(user string, exportType string, body []byte) string {
 		}
 		return processChaseContacts(user, chaseContacts)
 	} else {
-		errs.WriteString(fmt.Sprintf("Unknown upload type: %s", uploadType))
+		errs.WriteString(fmt.Sprintf("Unknown upload type: %s", exportType))
 	}
 	return errs.String()
 }
@@ -185,4 +186,31 @@ func processChaseContacts(user string, chaseContacts []ChaseContact) string {
 		errs.WriteString(insertChaseContact(user, contact))
 	}
 	return errs.String()
+}
+
+func handleExport() {
+	// Debug function for local testing
+	fmt.Println("Export handler - not yet implemented")
+}
+
+func insertActivationContact(user string, contact ActivationContact) string {
+	// This function would export activation contacts to CSV
+	return fmt.Sprintf("Export Activation - Callsign: %s, Date: %s, Contact: %s, Summit: %s, S2S: %s\n",
+		contact.CallsignUsed, contact.Date, contact.Contact, contact.SummitId, contact.SummitToSummit)
+}
+
+func insertChaseContact(user string, contact ChaseContact) string {
+	// This function would export chase contacts to CSV
+	return fmt.Sprintf("Export Chase - Callsign: %s, Date: %s, Summit: %s, Station Worked: %s\n",
+		contact.CallsignUsed, contact.Date, contact.Summit, contact.StationWorked)
+}
+
+func GetFilename(basepath string, callsign string) string {
+	// Generate a filename with timestamp
+	return fmt.Sprintf("%s/export-%s.csv", basepath, callsign)
+}
+
+func WriteToFile(filename string, data []byte) error {
+	// Placeholder - would write data to file
+	return nil
 }

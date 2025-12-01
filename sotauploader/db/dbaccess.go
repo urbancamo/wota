@@ -3,10 +3,11 @@ package db
 import (
 	"database/sql"
 	"strings"
-	"wota/sotautils"
+
+	"github.com/urbancamo/wota/sotautils"
 )
 
-const ActivationInsertSql = "INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`, `confirmed`) VALUES (?,?,?,?,?,?,?,?,?,?)"
+const ActivationInsertSql = "INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`, `confirmed`, `band`, `mode`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
 const ActivationSelectSql = "SELECT COUNT(*) FROM `activator_log` WHERE `activatedby`=? AND `wotaid`=? AND `stncall`=? AND `date`=?"
 
 const ChaseInsertSql = "INSERT INTO `chaser_log`(`wkdby`, `ucall`, `wotaid`, `date`, `time`, `year`, `stncall`) VALUES (?,?,?,?,?,?,?)"
@@ -151,7 +152,7 @@ func hasWorkedChaserFromSummit(callUsed string, summitId int, user string, date 
 	return count > 0, err
 }
 
-func InsertActivation(user string, callsignUsed string, date string, contact string, summitId int, summitToSummit string) (int64, error) {
+func InsertActivation(user string, callsignUsed string, date string, contact string, summitId int, summitToSummit string, band string, mode string) (int64, error) {
 	s2s := false
 	year := date[0:4] // '2020-11-07 10:07:00'
 	//  01234567890123456789
@@ -184,8 +185,8 @@ func InsertActivation(user string, callsignUsed string, date string, contact str
 	}
 
 	// If not insert the record
-	// INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`)
-	result, err := activationInsertSql.Exec(user, callsignUsed, summitId, date, time, year, sotautils.GetOperatorFromCallsign(contact), contact, boolToInt(s2s), boolToInt(chase))
+	// INSERT INTO `activator_log`(`activatedby`, `callused`, `wotaid`, `date`, `time`, `year`, `stncall`, `ucall`, `s2s`, `confirmed`, `band`, `mode`)
+	result, err := activationInsertSql.Exec(user, callsignUsed, summitId, date, time, year, sotautils.GetOperatorFromCallsign(contact), contact, boolToInt(s2s), boolToInt(chase), band, mode)
 	if err != nil {
 		return 0, err
 	}

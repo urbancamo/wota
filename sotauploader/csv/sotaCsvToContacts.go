@@ -5,8 +5,10 @@ import (
 	"errors"
 	"io"
 	"regexp"
+	"strconv"
 	"strings"
-	"wota/sotautils"
+
+	"github.com/urbancamo/wota/sotautils"
 )
 
 // To log an activation we need:
@@ -24,6 +26,8 @@ type ActivationContact struct {
 	StnCall     string
 	UCall       string
 	S2S         bool
+	Mode        string
+	Band        string
 	Errors      string
 }
 
@@ -213,6 +217,12 @@ func parseSotaContactsForActivationContact(contacts []SotaContact, operator stri
 				activationContact.S2S = checkStringContainsAWotaRef(contact.Comment)
 			}
 
+			// Extract mode from contact
+			activationContact.Mode = contact.Mode
+
+			// Parse frequency and determine band
+			activationContact.Band = parseFrequencyToBand(contact.Frequency)
+
 			activationContacts = append(activationContacts, activationContact)
 		}
 
@@ -257,6 +267,23 @@ func checkCallUsedIsUs(callUsed string, operator string) bool {
 	//return strings.Contains(callUsed, operator)
 	// ignore any checks and assume activators know what they're doing!
 	return true
+}
+
+// parseFrequencyToBand extracts frequency from strings like "144MHz", "14MHz", "7.100MHz"
+// and returns the amateur radio band name using the RSGB band plan
+func parseFrequencyToBand(freqString string) string {
+	// Remove "MHz" or "MHZ" suffix if present
+	freqString = strings.ToUpper(strings.TrimSpace(freqString))
+	freqString = strings.TrimSuffix(freqString, "MHZ")
+
+	// Try to parse the numeric value
+	freqValue, err := strconv.ParseFloat(freqString, 64)
+	if err != nil {
+		return ""
+	}
+
+	// Use the band plan lookup to find the band
+	return sotautils.GetBandFromFrequencyMHz(freqValue)
 }
 
 func parseSotaContactsForChaserContacts(contacts []SotaContact, operator string) []ChaserContact {

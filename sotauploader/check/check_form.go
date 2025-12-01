@@ -8,16 +8,16 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/cgi"
 	"os"
 	"strings"
 	"time"
-	"wota/sotauploader/csv"
-	"wota/sotauploader/db"
-	"wota/sotauploader/utils"
-	"wota/sotautils"
+
+	"github.com/urbancamo/wota/sotauploader/csv"
+	"github.com/urbancamo/wota/sotauploader/db"
+	"github.com/urbancamo/wota/sotauploader/utils"
+	"github.com/urbancamo/wota/sotautils"
 )
 
 var err error
@@ -216,7 +216,7 @@ func parseRequest(r *http.Request) (string, string, string) {
 
 	if debugIn {
 		filename = "/home/msw/go/src/wota/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv"
-		fileContentInBytes, err := ioutil.ReadFile(filename)
+		fileContentInBytes, err := os.ReadFile(filename)
 		if err == nil {
 			content = string(fileContentInBytes)
 		}

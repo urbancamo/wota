@@ -5,27 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e570908-176b-418c-bfed-fea109f8d2a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wota.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wota.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cgitest/readtest..go" beforeDir="false" afterPath="$PROJECT_DIR$/cgitest/readtest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cgitest/cgitest.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cgitest/readtest.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/exportcsv/exportcsv.go" beforeDir="false" afterPath="$PROJECT_DIR$/exportcsv/exportcsv.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotaalerts/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaalerts/dbconfig.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotaspots/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaspots/dbconfig.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotaalerts/getalerts.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaalerts/getalerts.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotaspots/getspots.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotaspots/getspots.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/check/check_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/check/check_form.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotauploader/create/create_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/create/create_form.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/db/dbconfig.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotauploader/db/dbaccess.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/db/dbaccess.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sotauploader/dbtest/dbtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/dbtest/dbtest.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/process/process_form.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/process/process_form.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/templates/sota-upload-check.html" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/templates/sota-upload-check.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/templates/sota-upload-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/templates/sota-upload-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/test/csv/2020-09-19-Thunacar-Knott-WOTA.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sotautils/sotawota.go" beforeDir="false" afterPath="$PROJECT_DIR$/sotautils/sotawota.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,7 +38,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///usr/local/go16" />
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.24.10" />
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
@@ -49,6 +52,12 @@
       </map>
     </option>
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;urbancamo&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -57,59 +66,82 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/urbancamo/wota.git&quot;,
+    &quot;accountId&quot;: &quot;1f906ce3-3841-4d16-9862-dba50aabb070&quot;
+  }
+}</component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
     <option name="urls">
       <list>
-        <option value="file://$PROJECT_DIR$/../.." />
+        <option value="file://$USER_HOME$" />
       </list>
     </option>
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="1QHG2MaAAOpePwixzkwhZC2yY7L" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="configurable..is.expanded" value="false" />
-    <property name="configurable.GoLibrariesConfigurable.is.expanded" value="true" />
-    <property name="go.formatter.settings.were.checked" value="true" />
-    <property name="go.gopath.indexing.explicitly.defined" value="true" />
-    <property name="go.import.settings.migrated" value="true" />
-    <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sotauploader/test" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Build.check_form.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/msw/code/wota/sotauploader&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="GoMoveDeclarationDialog.RECENT_KEY">
       <recent name="$PROJECT_DIR$/sotauploader/utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sotauploader" />
       <recent name="$PROJECT_DIR$/sotauploader/templates" />
       <recent name="$PROJECT_DIR$/php" />
       <recent name="$PROJECT_DIR$/sotaalerts" />
       <recent name="$PROJECT_DIR$/sotauploader/check" />
-      <recent name="$PROJECT_DIR$/src/sotauploader" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sotauploader/db" />
       <recent name="$PROJECT_DIR$/sotauploader/dbtest" />
       <recent name="$PROJECT_DIR$/sotauploader/process/json" />
       <recent name="$PROJECT_DIR$/sotauploader/test/csv" />
       <recent name="$PROJECT_DIR$/sotauploader/test" />
-      <recent name="$PROJECT_DIR$/sotautils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.check_form">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="GoApplicationRunConfiguration" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="wota" />
       <working_directory value="$PROJECT_DIR$/bin" />
@@ -123,7 +155,7 @@
     </configuration>
     <configuration name="cgitest" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="wota" />
-      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <working_directory value="$USER_HOME$/bin" />
       <go_parameters value="-i" />
       <kind value="FILE" />
       <package value="wota" />
@@ -139,7 +171,7 @@
       <package value="wota" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/sotauploader/check/check_form.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
     <configuration name="create_form" type="GoApplicationRunConfiguration" factoryName="Go Application">
@@ -150,38 +182,38 @@
       <package value="wota" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/sotauploader/create/create_form.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
     <configuration name="getspots" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="wota" />
-      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <working_directory value="$USER_HOME$/bin" />
       <go_parameters value="-i" />
       <kind value="DIRECTORY" />
       <package value="wota" />
       <directory value="$PROJECT_DIR$/sotaspots" />
-      <filePath value="$PROJECT_DIR$/|$PROJECT_DIR$/sotaspots/getspots.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <filePath value="$PROJECT_DIR$/|/Users/msw/code/wota/sotaspots/getspots.go" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
     <configuration name="go build dbaccess.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="wota" />
-      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <working_directory value="$USER_HOME$/bin" />
       <kind value="FILE" />
       <package value="wota" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/sotauploader/db/dbaccess.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
     <configuration name="go build dbtest.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="wota" />
-      <working_directory value="$PROJECT_DIR$/../../bin" />
+      <working_directory value="$USER_HOME$/bin" />
       <kind value="FILE" />
       <package value="wota" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/sotauploader/dbtest/dbtest.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
     <configuration name="go build testSotaCsvToContacts.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -201,30 +233,30 @@
       <package value="wota" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/sotauploader/process/process_form.go" />
-      <output_directory value="$PROJECT_DIR$/../../bin" />
+      <output_directory value="$USER_HOME$/bin" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Go Build.cgitest" />
-      <item itemvalue="Go Build.create_form" />
-      <item itemvalue="Go Build.getspots" />
-      <item itemvalue="Go Build.check_form" />
-      <item itemvalue="Go Build.go build dbaccess.go" />
-      <item itemvalue="Go Build.go build dbtest.go (1)" />
-      <item itemvalue="Go Build.process_form" />
-      <item itemvalue="Go Build.go build testSotaCsvToContacts.go" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.check_form" />
-        <item itemvalue="Go Build.process_form" />
-        <item itemvalue="Go Build.go build testSotaCsvToContacts.go" />
-        <item itemvalue="Go Build.go build dbtest.go (1)" />
-        <item itemvalue="Go Build.go build dbaccess.go" />
-      </list>
-    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28238.7" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1764525653402</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764525653402</updated>
+      <workItem from="1764586305523" duration="85000" />
+      <workItem from="1764586394075" duration="1623000" />
+    </task>
+    <servers />
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
@@ -241,7 +273,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Now working as a cron job on the website" />
@@ -252,61 +283,9 @@
     <MESSAGE value=" * add feature to store time in database" />
     <option name="LAST_COMMIT_MESSAGE" value=" * add feature to store time in database" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotaspots/getspots.go</url>
-          <line>2</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/process/process_form.go</url>
-          <line>2</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/dbtest/dbtest.go</url>
-          <line>10</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotaalerts/getalerts.go</url>
-          <line>96</line>
-          <option name="timeStamp" value="61" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/process/process_form.go</url>
-          <line>148</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/db/dbaccess.go</url>
-          <line>152</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/check/check_form.go</url>
-          <line>218</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/test/testSotaCsvToContacts.go</url>
-          <line>99</line>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/csv/sotaCsvToContacts.go</url>
-          <line>85</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/sotauploader/check/check_form.go</url>
-          <line>70</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -326,5 +305,13 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

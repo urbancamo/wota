@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"wota/sotauploader/csv"
+	"os"
+
+	"github.com/urbancamo/wota/sotauploader/csv"
 )
 
 var testUpload1 = `V2,M0NOM/P,G/LD-022,18/05/19,1347,144MHz,FM,M0OAT/P,G/LD-059,Thx for contact from Seat Sandal
@@ -132,16 +133,16 @@ func main() {
 	checkContactNumberIsCorrect("activator", len(contacts.ActivationContacts), 0)
 	checkContactNumberIsCorrect("chaser", len(contacts.ChaserContacts), 3)
 
-	contacts, _ = csv.ParseCsv(testUpload3, "M0NOM")
+	contacts, _ = csv.ParseCsv(testUpload3, "M0NOM", "")
 	checkContactNumberIsCorrect("activator", len(contacts.ActivationContacts), 0)
 	checkContactNumberIsCorrect("chaser", len(contacts.ChaserContacts), 0)
 
-	contacts, _ = csv.ParseCsv(testUpload1, "M0NOM")
+	contacts, _ = csv.ParseCsv(testUpload1, "M0NOM", "")
 	checkContactNumberIsCorrect("activator", len(contacts.ActivationContacts), 9)
 	checkContactNumberIsCorrect("chaser", len(contacts.ChaserContacts), 0)
 	checkS2SNumberIsCorrect(contacts.ActivationContacts, 3)
 
-	contacts, _ = csv.ParseCsv(testUpload2, "M0NOM")
+	contacts, _ = csv.ParseCsv(testUpload2, "M0NOM", "")
 	checkContactNumberIsCorrect("activator", len(contacts.ActivationContacts), 0)
 	checkContactNumberIsCorrect("chaser", len(contacts.ChaserContacts), 2)
 
@@ -164,18 +165,18 @@ func main() {
 
 func loadAndParseCsv(filename string) (csv.Contacts, error) {
 	var contacts csv.Contacts
-	fileContentInBytes, err := ioutil.ReadFile(filename)
+	fileContentInBytes, err := os.ReadFile(filename)
 	if err == nil {
-		contacts, _ = csv.ParseCsv(string(fileContentInBytes), "M0NOM")
+		contacts, _ = csv.ParseCsv(string(fileContentInBytes), "M0NOM", "")
 	}
 	return contacts, err
 }
 
 func loadAndParseCsvWithUser(filename string, user string) (csv.Contacts, error) {
 	var contacts csv.Contacts
-	fileContentInBytes, err := ioutil.ReadFile(filename)
+	fileContentInBytes, err := os.ReadFile(filename)
 	if err == nil {
-		contacts, _ = csv.ParseCsv(string(fileContentInBytes), user)
+		contacts, _ = csv.ParseCsv(string(fileContentInBytes), user, "")
 	}
 	return contacts, err
 }

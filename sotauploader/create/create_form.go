@@ -10,8 +10,9 @@ import (
 	"net/http/cgi"
 	"sort"
 	"strings"
-	"wota/sotauploader/db"
-	"wota/sotauploader/utils"
+
+	"github.com/urbancamo/wota/sotauploader/db"
+	"github.com/urbancamo/wota/sotauploader/utils"
 )
 
 var err error
